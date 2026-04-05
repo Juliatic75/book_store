@@ -1,0 +1,7 @@
+@import "./base.css";
+@import "tailwindcss";
+@import "./colors.css";
+@import "./transitions.css";
+
+#app {
+}
