@@ -11,11 +11,11 @@
     </ul>
 
     <div class="side-menu flex items-center">
-      <router-link class="flex">
+      <router-link class="flex" to="/">
         <IconCart />
       </router-link>
 
-      <router-link class="flex">
+      <router-link class="flex" to="/">
         <IconUser />
       </router-link>
     </div>
