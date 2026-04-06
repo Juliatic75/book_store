@@ -18,6 +18,7 @@ const classList = computed(() => {
   return {
     'variant-primary': props.variant === 'primary',
     'variant-outline': props.variant === 'outline',
+    'variant-delete': props.variant === 'delete',
   }
 })
 </script>
@@ -43,6 +44,11 @@ const classList = computed(() => {
         background-color: #FFFFFF;
         box-shadow: 0 0 0 1px var(--primary-color) inset;
         color: var(--primary-color);
+      }
+      &-delete {
+        background-color: #FFFFFF;
+        box-shadow: 0 0 0 2px var(--delete-color) inset;
+        color: var(--text-color);
       }
     }
   }
