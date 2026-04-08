@@ -1,7 +1,22 @@
 <template>
   <main>
+    <Tabs :tabs="tabs">
+      <template #descr>
+
+      </template>
+
+      <template #chars>
+        <span>ХАРАКТЕРИСТИКИ</span>
+      </template>
+    </Tabs>
+
+    <button @click="isModalOpen = !isModalOpen">test</button>
+    <Modal v-model="isModalOpen"></Modal>
+
     <Button class="mb-4">PRIMARY</Button>
+
     <Button variant="outline">OUTLINE</Button>
+
     <div class="buttonDEL ">
       <Button variant="delete">УДАЛИТЬ ПРОФИЛЬ</Button>
     </div>
@@ -48,7 +63,7 @@
     </div>
 
     <div class="popup flex justify-center items-center">
-      <PopupDelete/>
+      <ModalDeleteProfile v-model="isModalOpen" />
     </div>
 
     <div class="popup flex justify-center items-center">
@@ -92,16 +107,26 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import Button from '@/components/button/index.vue'
 import BookCard from '@/components/book-card/index.vue'
 import CoffeeCard from '@/components/coffee-card/index.vue'
 import ReviewsCard from '@/components/reviews-card/index.vue'
 import PopupProcess from '@/components/popup-processing/index.vue'
-import PopupDelete from '@/components/popup-delete/index.vue'
+import ModalDeleteProfile from '@/components/modal-delete-profile/index.vue'
 import PopupTicketing from '@/components/popup-ticketing/index.vue'
 import FavoritesCard from '@/components/favorites-card/index.vue'
 import TitleCard from '@/components/title-card/index.vue'
 import PriceAndButton from '@/components/price-and-button-card/index.vue'
+import Modal from '@/components/modal/index.vue'
+import Tabs from '@/components/tabs/index.vue'
+
+const isModalOpen = ref(false)
+
+const tabs = [
+  { label: 'Описание', value: 'descr' },
+  { label: 'Характеристики', value: 'chars' }
+]
 
 const books = [
   {

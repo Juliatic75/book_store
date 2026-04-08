@@ -1,13 +1,14 @@
 <template>
   <div class="popupProcessing-component">
-    
+
     <div class="header mb-4 flex justify-between ">
-      <div class="title"> 
+      <div class="title">
         <span>ЗАКАЗ ОФОРМЛЕН!</span>
       </div>
       <div class="close flex items-center">
-        <!-- Сделать кнопочкой -->
-        <img src="/img/close.svg"/>
+        <Button variant="text">
+          <IconClose />
+        </Button>
       </div>
     </div>
 
@@ -19,9 +20,9 @@
 
     <div class="message mb-6 text-left ">
       <span>
-        Доставка обычно занимает 3–5 дней. 
-        <br> <span class="underlined-text">Пожалуйста, будьте на связи</span> — перед выездом курьер позвонит вам, 
-        чтобы подтвердить адрес и удобное время. Мы тоже пришлём вам уведомление, 
+        Доставка обычно занимает 3–5 дней.
+        <br> <span class="underlined-text">Пожалуйста, будьте на связи</span> — перед выездом курьер позвонит вам,
+        чтобы подтвердить адрес и удобное время. Мы тоже пришлём вам уведомление,
         когда заказ будет передан курьеру.
       </span>
     </div>
@@ -35,6 +36,7 @@
 
 <script setup>
 import Button from '@/components/button/index.vue'
+import IconClose from "@/components/icons/icon-close.vue";
 </script>
 
 <style lang="scss" scoped>

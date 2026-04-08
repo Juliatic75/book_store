@@ -18,11 +18,11 @@
         </div>
 
         <div class="star flex items-center">
-            <img src="/img/star.svg"/>
+          <IconStar/>
         </div>
 
       </div>
-      
+
     </div>
 
     <div class="description mb-4 text-left flex-1">
@@ -47,7 +47,14 @@
         </div>
         <!-- Сделать кнопочкой -->
         <div class="hert flex items-center">
-          <img src="/img/hertGrey.svg"/>
+          <Button
+            @click="isLikeActive = !isLikeActive"
+            class="button-like"
+            :class="{ 'active': isLikeActive }"
+            variant="text"
+          >
+            <IconHeart/>
+          </Button>
         </div>
       </div>
 
@@ -56,7 +63,10 @@
 </template>
 
 <script setup>
-import { defineProps } from "vue"
+import { defineProps, ref } from 'vue'
+import Button from '@/components/button/index.vue'
+import IconHeart from "@/components/icons/icon-heart.vue";
+import IconStar from "@/components/icons/icon-star.vue";
 
 const props = defineProps({
   id: {
@@ -90,6 +100,7 @@ const props = defineProps({
   },
 })
 
+const isLikeActive = ref(false)
 </script>
 
 <style lang="scss" scoped>
@@ -98,7 +109,7 @@ const props = defineProps({
   background-color: var(--lighten-color);
   margin-top: 24px;
 
-  .author{
+  .author {
     span {
       font-size: 18px;
       font-weight: 500;
@@ -106,7 +117,7 @@ const props = defineProps({
     }
   }
 
-  .gradeStar{
+  .gradeStar {
     span {
       font-size: 18px;
       font-weight: 300;
@@ -115,7 +126,7 @@ const props = defineProps({
     }
   }
 
-  .description{
+  .description {
     span {
       font-size: 18px;
       font-weight: 400;
@@ -123,7 +134,7 @@ const props = defineProps({
     }
   }
 
-   .footer{
+  .footer {
     span {
       font-size: 18px;
       font-weight: 300;
@@ -132,7 +143,7 @@ const props = defineProps({
     }
   }
 
-  .gradeHert{
+  .gradeHert {
     span {
       font-size: 18px;
       font-weight: 300;
@@ -142,7 +153,14 @@ const props = defineProps({
     }
   }
 
+  .button-like {
+    transition: color 0.15s ease;
+    color: #C3C3C3;
 
+    &.active {
+      color: #DB1616;
+    }
+  }
 }
 
 </style>

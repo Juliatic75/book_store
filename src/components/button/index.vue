@@ -15,10 +15,18 @@ const props = defineProps({
 })
 
 const classList = computed(() => {
+  const variants = ['primary', 'outline', 'delete', 'text']
+
+  let variant
+
+  if (variants.includes(props.variant)) {
+    variant = `variant-${props.variant}`
+  } else {
+    variant = 'variant-primary'
+  }
+
   return {
-    'variant-primary': props.variant === 'primary',
-    'variant-outline': props.variant === 'outline',
-    'variant-delete': props.variant === 'delete',
+    [variant]: true
   }
 })
 </script>
@@ -45,9 +53,16 @@ const classList = computed(() => {
         box-shadow: 0 0 0 1px var(--primary-color) inset;
         color: var(--primary-color);
       }
+
       &-delete {
         background-color: #FFFFFF;
         box-shadow: 0 0 0 2px var(--delete-color) inset;
+        color: var(--text-color);
+      }
+
+      &-text {
+        padding: 0;
+        background-color: transparent;
         color: var(--text-color);
       }
     }
