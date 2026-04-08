@@ -32,23 +32,61 @@
 
     <div class="grid grid-cols-3 gap-5">
       <ReviewsCard
-        v-for="Reviews in ReviewsItems"
-        :key="Reviews.id"
-        :author="Reviews.author"
-        :gradeStar="Reviews.gradeStar"
-        :description="Reviews.description"
-        :date="Reviews.date"
-        :gradeHert="Reviews.gradeHert"
+        v-for="reviews in reviewsItems"
+        :key="reviews.id"
+        :author="reviews.author"
+        :gradeStar="reviews.gradeStar"
+        :genre="reviews.genre"
+        :description="reviews.description"
+        :date="reviews.date"
+        :gradeHert="reviews.gradeHert"
       />
     </div>
 
     <div class="popup flex justify-center items-center">
-      <PopupProcess
-      
+      <PopupProcess/>
+    </div>
+
+    <div class="popup flex justify-center items-center">
+      <PopupDelete/>
+    </div>
+
+    <div class="popup flex justify-center items-center">
+      <PopupTicketing/>
+    </div>
+
+    <div class="grid grid-cols-2 gap-5 items-center">
+      <FavoritesCard
+        v-for="favorites in favoritesItems"
+        :key="favorites.id"
+        :title="favorites.title"
+        :author="favorites.author"
+        :genre="favorites.genre"
+        :description="favorites.description"
       />
     </div>
 
+    <div class="title-book">
+      <TitleCard
+        v-for="title in titleItems"
+        :key="title.id"
+        :title="title.title"
+        :author="title.author"
+        :genre="title.genre"
+        :gradeStar="title.gradeStar"
+        :reviews="title.reviews"
+      />
+    </div>
 
+    <div class="price-book">
+      <PriceAndButton
+        v-for="price in pticeItems"
+        :key="price.id"
+        :price="price.price"
+        :oldPrice="price.oldPrice"
+        :availability="price.availability"
+      />
+    </div>
 
   </main>
 </template>
@@ -56,9 +94,14 @@
 <script setup>
 import Button from '@/components/button/index.vue'
 import BookCard from '@/components/book-card/index.vue'
-import CoffeeCard from '@/components/coffee_card/index.vue'
+import CoffeeCard from '@/components/coffee-card/index.vue'
 import ReviewsCard from '@/components/reviews-card/index.vue'
 import PopupProcess from '@/components/popup-processing/index.vue'
+import PopupDelete from '@/components/popup-delete/index.vue'
+import PopupTicketing from '@/components/popup-ticketing/index.vue'
+import FavoritesCard from '@/components/favorites-card/index.vue'
+import TitleCard from '@/components/title-card/index.vue'
+import PriceAndButton from '@/components/price-and-button-card/index.vue'
 
 const books = [
   {
@@ -84,7 +127,7 @@ const books = [
 const coffeeItems = [
   {
     id: 4,
-    title: 'Карамельно-осенний латте «В метре от тебя»',
+    title: 'Карамельно-осенний латте \n «В метре от тебя»',
     description: 'Нежный латте с мягким карамельным вкусом и лёгкими фруктовыми нотками, передающий тепло и трогательность истории.',
     price: '499',
     compound: 'Эспрессо, молоко, карамельный сироп, яблочный сок, сливки, карамельная крошка'
@@ -92,7 +135,7 @@ const coffeeItems = [
 
   {
     id: 5,
-    title: 'Магический фраппе «Швея теней»',
+    title: 'Магический фраппе \n «Швея теней»',
     description: 'Глубокий и насыщенный напиток с ягодно-ванильными нотками, словно сотканный из магии и тайн прямо со страниц книги.',
     price: '499',
     compound: 'Эспрессо, молоко, черничный сироп, ванильный сироп, сливки,  декоративные посыпки'
@@ -100,7 +143,7 @@ const coffeeItems = [
 
 ]
 
-const ReviewsItems = [
+const reviewsItems = [
   {
     id: 1,
     author: 'Дарья Новикова',
@@ -110,6 +153,44 @@ const ReviewsItems = [
     gradeHert: '10'
   }
 
+]
+
+const favoritesItems = [
+  {
+    id: 1,
+    title: 'Шёпот эха',
+    author: 'Михаил Лукин',
+    genre: 'Фентези',
+    description: 'Каждую ночь её сны становятся реальностью для всего города. Чтобы никто не пострадал, она не спит уже месяц.'
+  },
+
+  {
+    id: 2,
+    title: 'Шёпот эха',
+    author: 'Михаил Лукин',
+    genre: 'Фентези',
+    description: 'Каждую ночь её сны становятся реальностью для всего города. Чтобы никто не пострадал, она не спит уже месяц.'
+  }
+]
+
+const titleItems = [
+  {
+    id: 1,
+    title: 'НОЧНОЙ СВИДЕТЕЛЬ',
+    author: 'Дарья Новикова',
+    genre: 'Детектив',
+    gradeStar: '4.6',
+    reviews: '6'
+  }
+]
+
+const pticeItems = [
+  {
+    id: 1,
+    price: '1299',
+    oldPrice: '1499',
+    availability: 'В наличие',
+  }
 ]
 
 </script>

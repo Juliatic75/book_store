@@ -3,7 +3,7 @@
     
     <div class="header mb-4 flex justify-between ">
       <div class="title"> 
-        <span>ЗАКАЗ ОФОРМЛЕН!</span>
+        <span>УДАЛИТЬ ПРОФИЛЬ</span>
       </div>
       <div class="close flex items-center">
         <!-- Сделать кнопочкой -->
@@ -13,21 +13,20 @@
 
     <div class="message mb-6 text-left">
       <span>
-        Спасибо за покупку! Мы уже собираем ваши книги с особой тщательностью.
+        Вы действительно хотите удалить свой профиль? 
       </span>
     </div>
 
     <div class="message mb-6 text-left ">
       <span>
-        Доставка обычно занимает 3–5 дней. 
-        <br> <span class="underlined-text">Пожалуйста, будьте на связи</span> — перед выездом курьер позвонит вам, 
-        чтобы подтвердить адрес и удобное время. Мы тоже пришлём вам уведомление, 
-        когда заказ будет передан курьеру.
+        <span class="underlined-text">Это действие необратимо</span> — все ваши данные, сохранения 
+        <br>и история будут стерты навсегда.
       </span>
     </div>
 
-    <div class="button ">
-      <Button lass="mb-8 ">ОТЛИЧНО, СПАСИБО</Button>
+    <div class="button">
+      <Button lass="mb-8">ОСТАВИТЬ АККАУНТ</Button>
+      <Button variant="delete">ДА, УДАЛИТЬ НАВСЕГДА</Button>
     </div>
 
   </div>
@@ -43,7 +42,13 @@ import Button from '@/components/button/index.vue'
   background-color: var(--lighten-color); /* он должен быть белым, покрасила в серый, чтобы видеть на главной */
   margin-top: 24px;
   width: 780px;
-  height: 366px;
+  height: 298px;
+
+  .button{
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+  }
 
   .title{
     display: block;
@@ -62,15 +67,13 @@ import Button from '@/components/button/index.vue'
     }
   }
 
-  .button{
-    width: 300px;
-  }
+  
 
   .underlined-text {
   text-decoration: underline;
   text-underline-offset: 5px;
   text-decoration-thickness: 1px;
-  color: var(--text-selection);
+  color: var(--text-selection-danger);
 }
 
 }

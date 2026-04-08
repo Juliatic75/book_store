@@ -45,7 +45,7 @@
             {{ props.gradeHert }}
           </span>
         </div>
-
+        <!-- Сделать кнопочкой -->
         <div class="hert flex items-center">
           <img src="/img/hertGrey.svg"/>
         </div>

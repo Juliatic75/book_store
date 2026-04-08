@@ -3,7 +3,7 @@
     
     <div class="header mb-4 flex justify-between ">
       <div class="title"> 
-        <span>ЗАКАЗ ОФОРМЛЕН!</span>
+        <span>ПРИЯТНОГО ВЕЧЕРА!</span>
       </div>
       <div class="close flex items-center">
         <!-- Сделать кнопочкой -->
@@ -13,16 +13,15 @@
 
     <div class="message mb-6 text-left">
       <span>
-        Спасибо за покупку! Мы уже собираем ваши книги с особой тщательностью.
+        Билет успешно оформлен. 
       </span>
     </div>
 
     <div class="message mb-6 text-left ">
       <span>
-        Доставка обычно занимает 3–5 дней. 
-        <br> <span class="underlined-text">Пожалуйста, будьте на связи</span> — перед выездом курьер позвонит вам, 
-        чтобы подтвердить адрес и удобное время. Мы тоже пришлём вам уведомление, 
-        когда заказ будет передан курьеру.
+        <span class="underlined-text">Мы отправили его на вашу почту</span> — обычно письмо приходит 
+        <br>в течение пары минут. Если не видите во «Входящих», загляните 
+        <br>в папку «Спам» или «Промоакции».
       </span>
     </div>
 
@@ -43,7 +42,7 @@ import Button from '@/components/button/index.vue'
   background-color: var(--lighten-color); /* он должен быть белым, покрасила в серый, чтобы видеть на главной */
   margin-top: 24px;
   width: 780px;
-  height: 366px;
+  height: 322px;
 
   .title{
     display: block;

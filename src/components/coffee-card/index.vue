@@ -1,5 +1,5 @@
 <template>
-  <div class="coffee_card-component flex flex-col">
+  <div class="coffee-card-component flex flex-col">
     <div class="header mb-4 relative">
       <div class="flex justify-center">
         <img :src="props.imgUrl" alt="coffee-preview" />
@@ -71,13 +71,14 @@ console.log(props);
 </script>
 
 <style lang="scss" scoped>
-.coffee_card-component {
+.coffee-card-component {
   padding: 16px;
   background-color: var(--lighten-color);
   margin-top: 24px;
 
   .title {
     .coffee-title {
+      white-space: pre-line;
       display: block;
       margin-bottom: 16px;
       line-height: 1;

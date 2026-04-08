@@ -23,7 +23,7 @@
       <span>{{ props.price }}₽</span>
     </div>
 
-    <Button>Добавить в корзину</Button>
+    <Button>ДОБАВИТЬ В КОРЗИНУ</Button>
   </div>
 </template>
 

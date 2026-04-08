@@ -31,7 +31,7 @@ import IconUser from '@/components/icons/icon-user.vue'
 <style lang="scss" scoped>
 .header-component {
   border-bottom: 1px solid var(--text-color);
-  padding: 24px 0 32px 0;
+  padding: 24px 0 24px 0;
 
   .logo {
     font-size: 38px;
@@ -39,7 +39,7 @@ import IconUser from '@/components/icons/icon-user.vue'
   }
 
   .menu {
-    font-size: 20px;
+    font-size: 18px;
     line-height: 1;
 
     li + li {
