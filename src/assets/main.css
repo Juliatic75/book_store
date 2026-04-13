@@ -1,7 +1,16 @@
+@import "./fonts.css";
 @import "./base.css";
-@import "tailwindcss";
 @import "./colors.css";
 @import "./transitions.css";
+@import "tailwindcss";
+
+@theme {
+  --breakpoint-sm: 375px;
+  --breakpoint-md: 834px;
+  --breakpoint-lg: 1194px;
+  --breakpoint-xl: 1440px;
+  --breakpoint-2xl: 1920px;
+}
 
 #app {
 }

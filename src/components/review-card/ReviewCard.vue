@@ -1,5 +1,5 @@
 <template>
-  <div class="reviews_card-component flex flex-col">
+  <div class="review-card-component flex flex-col">
 
     <div class="header mb-4 flex justify-between ">
 
@@ -11,9 +11,9 @@
 
       <div class="grade flex ">
 
-        <div class="gradeStar flex items-center ">
+        <div class="count-star flex items-center ">
           <span>
-            {{ props.gradeStar }}
+            {{ props.starCount }}
           </span>
         </div>
 
@@ -40,9 +40,9 @@
       </div>
 
       <div class="grade flex ">
-        <div class="gradeHert  flex items-center">
+        <div class="count-like  flex items-center">
           <span>
-            {{ props.gradeHert }}
+            {{ props.likeCount }}
           </span>
         </div>
         <!-- Сделать кнопочкой -->
@@ -64,7 +64,7 @@
 
 <script setup>
 import { defineProps, ref } from 'vue'
-import Button from '@/components/button/index.vue'
+import Button from '@/components/button/Button.vue'
 import IconHeart from "@/components/icons/icon-heart.vue";
 import IconStar from "@/components/icons/icon-star.vue";
 
@@ -73,28 +73,23 @@ const props = defineProps({
     type: Number,
     default: null,
   },
-
   author: {
     type: String,
     default: '',
   },
-
-  gradeStar: {
+  starCount: {
     type: [String, Number],
     default: '',
   },
-
   description: {
     type: String,
     default: '',
   },
-
   date: {
     type: [String, Date],
     default: '',
   },
-
-  gradeHert: {
+  likeCount: {
     type: [String, Number],
     default: '',
   },
@@ -104,22 +99,19 @@ const isLikeActive = ref(false)
 </script>
 
 <style lang="scss" scoped>
-.reviews_card-component {
+.review-card-component {
   padding: 16px;
   background-color: var(--lighten-color);
-  margin-top: 24px;
 
   .author {
     span {
-      font-size: 18px;
       font-weight: 500;
       line-height: 1;
     }
   }
 
-  .gradeStar {
+  .count-star {
     span {
-      font-size: 18px;
       font-weight: 300;
       line-height: 1;
       padding-right: 4px;
@@ -128,7 +120,6 @@ const isLikeActive = ref(false)
 
   .description {
     span {
-      font-size: 18px;
       font-weight: 400;
       line-height: 1;
     }
@@ -136,16 +127,14 @@ const isLikeActive = ref(false)
 
   .footer {
     span {
-      font-size: 18px;
       font-weight: 300;
       line-height: 1;
       color: var(--text-secondary);
     }
   }
 
-  .gradeHert {
+  .count-like {
     span {
-      font-size: 18px;
       font-weight: 300;
       line-height: 1;
       padding-right: 6px;

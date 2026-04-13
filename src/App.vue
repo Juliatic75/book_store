@@ -17,9 +17,9 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { RouterView } from 'vue-router'
-import Header from '@/components/header/header.vue'
-import Footer from '@/components/footer/footer.vue'
-import Preloader from '@/components/preloader/preloader.vue'
+import Header from '@/components/header/Header.vue'
+import Footer from '@/components/footer/Footer.vue'
+import Preloader from '@/components/preloader/Preloader.vue'
 
 const isLoading = ref(true);
 

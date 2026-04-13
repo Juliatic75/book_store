@@ -1,7 +1,5 @@
 <template>
-  <div class="footer-component flex justify-center">
-    <span>FOOTER</span>
-  </div>
+<div class="catalog-page"></div>
 </template>
 
 <script lang="ts" setup>

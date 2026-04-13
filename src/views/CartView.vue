@@ -1,5 +1,5 @@
 <template>
-  <div class="home-page"></div>
+  <div class="cart-page"></div>
 </template>
 
 <script lang="ts" setup>

@@ -89,7 +89,7 @@ console.log(props);
 
   .description {
     span {
-      font-size: 18px;
+      //font-size: 18px;
       font-weight: 300;
       line-height: 1;
     }

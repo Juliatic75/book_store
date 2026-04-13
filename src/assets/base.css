@@ -2,32 +2,65 @@
 *::before,
 *::after {
   box-sizing: border-box;
-  font-weight: normal;
+}
+
+html {
+  font-size: clamp(1rem, 0.818rem + 0.7767vw, 1.75rem);
 }
 
 body {
   margin: 0;
   color: var(--color-text);
   background: var(--color-background);
-  transition:
-    color 0.5s,
-    background-color 0.5s;
-  line-height: 1.6;
-  font-family:
-    Inter,
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    Oxygen,
-    Ubuntu,
-    Cantarell,
-    'Fira Sans',
-    'Droid Sans',
-    'Helvetica Neue',
-    sans-serif;
-  font-size: 15px;
+  transition: color 0.2s, background-color 0.2s;
+  line-height: 1;
+  font-family: 'Commissioner', sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.font-title {
+  font-size: clamp(1.25rem, 1.0073rem + 1.0356vw, 2.25rem);
+  font-weight: 600;
+  line-height: 100%;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.font-subtitle {
+  font-size: clamp(1.125rem, 1.0036rem + 0.5178vw, 1.625rem);
+  font-weight: 600;
+  line-height: 100%;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.font-price {
+  font-size: clamp(1.125rem, 1.0036rem + 0.5178vw, 1.625rem);
+  font-weight: 600;
+  line-height: 100%;
+  font-family: 'Commissioner', sans-serif;
+}
+
+.page {
+  padding: 0 16px 60px 16px;
+}
+
+table {
+  width: 100%;
+}
+
+button {
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;      /* Inherit font-family and size from parent */
+  color: inherit;     /* Inherit text color from parent */
+  cursor: pointer;
+  outline: none;      /* Be sure to replace with custom :focus styles */
+
+  /* Fixes for specific browsers */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }

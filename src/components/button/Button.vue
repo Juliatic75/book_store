@@ -37,7 +37,8 @@ const classList = computed(() => {
     width: 100%;
     color: #FFFFFF;
     font-weight: 700;
-    font-size: 16px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: clamp(0.875rem, 0.875rem + 0vw, 0.875rem);
     line-height: 1;
     user-select: none;
     padding: 12px 40px;
@@ -61,6 +62,8 @@ const classList = computed(() => {
       }
 
       &-text {
+        display: inline-block;
+        width: auto;
         padding: 0;
         background-color: transparent;
         color: var(--text-color);

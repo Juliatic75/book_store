@@ -1,11 +1,37 @@
 :root {
   --text-color: #000000;
   --text-secondary: #909090;
+  --text-lighten-color: #C4C4C4;
+  --text-tertiary-color: #525252;
   --primary-color: #083069;
   --secondary-color: #878787;
   --delete-color: #BF2F2F;
   --lighten-color: #F9F9FB;
+  /* Лишние */
   --line-color:  #000000;
   --text-selection: #083069;
   --text-selection-danger: #BF2F2F;
+}
+
+.color-primary {
+  color: var(--primary-color);
+}
+
+.color-secondary {
+  color: var(--secondary-color);
+}
+.color-delete {
+  color: var(--delete-color)
+}
+.color-text {
+  color: var(--text-color)
+}
+.color-text-secondary {
+  color: var(--text-secondary)
+}
+.color-text-lighten {
+  color: var(--text-lighten-color);
+}
+.color-text-tertiary {
+  color: var(--text-tertiary-color);
 }

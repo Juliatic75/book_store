@@ -3,10 +3,11 @@
     <div class="flex gap-4 mb-4">
       <span
         v-for="(tab, i) in props.tabs"
-        @click="currentTab = tab.value"
         :key="i"
-        class="cursor-pointer"
-        :class="{ 'border-b-2': currentTab === tab.value }">
+        @click="currentTab = tab.value"
+        class="font-subtitle cursor-pointer tab"
+        :class="{ 'active': currentTab === tab.value }"
+      >
         {{ tab.label }}
       </span>
     </div>
@@ -34,5 +35,14 @@ const currentTab = ref(props.tabs[0].value || '');
 </script>
 
 <style lang="scss" scoped>
-.tabs-component {}
+.tabs-component {
+  .tab {
+    font-size: clamp(0.875rem, 0.875rem + 0vw, 0.875rem);
+    color: var(--text-secondary);
+
+    &.active {
+      color: var(--text-color);
+    }
+  }
+}
 </style>

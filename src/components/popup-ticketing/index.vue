@@ -1,26 +1,26 @@
 <template>
   <div class="popupProcessing-component">
-    
+
     <div class="header mb-4 flex justify-between ">
-      <div class="title"> 
+      <div class="title">
         <span>ПРИЯТНОГО ВЕЧЕРА!</span>
       </div>
       <div class="close flex items-center">
         <!-- Сделать кнопочкой -->
-        <img src="/img/close.svg"/>
+<!--        <img src="/img/close.svg"/>-->
       </div>
     </div>
 
     <div class="message mb-6 text-left">
       <span>
-        Билет успешно оформлен. 
+        Билет успешно оформлен.
       </span>
     </div>
 
     <div class="message mb-6 text-left ">
       <span>
-        <span class="underlined-text">Мы отправили его на вашу почту</span> — обычно письмо приходит 
-        <br>в течение пары минут. Если не видите во «Входящих», загляните 
+        <span class="underlined-text">Мы отправили его на вашу почту</span> — обычно письмо приходит
+        <br>в течение пары минут. Если не видите во «Входящих», загляните
         <br>в папку «Спам» или «Промоакции».
       </span>
     </div>

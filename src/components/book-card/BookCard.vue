@@ -28,7 +28,7 @@
 </template>
 
 <script  setup>
-import Button from '@/components/button/index.vue'
+import Button from '@/components/button/Button.vue'
 import { defineProps } from "vue"
 
 
@@ -75,7 +75,6 @@ const props = defineProps({
 
   .header {
     .age {
-      font-size: 18px;
       font-weight: 300;
       line-height: 1;
     }
@@ -86,7 +85,6 @@ const props = defineProps({
       display: block;
       margin-bottom: 6px;
       line-height: 1;
-      font-size: 16px;
       font-weight: 600;
     }
 
@@ -94,14 +92,12 @@ const props = defineProps({
       display: block;
       color: var(--text-secondary);
       line-height: 1;
-      font-size: 16px;
       font-weight: 500;
     }
   }
 
   .description {
     span {
-      font-size: 18px;
       font-weight: 300;
       line-height: 1;
     }
@@ -109,7 +105,6 @@ const props = defineProps({
 
   .price {
     font-weight: 500;
-    font-size: 20px;
   }
 }
 </style>

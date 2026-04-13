@@ -1,5 +1,5 @@
 <template>
-  <div class="home-page"></div>
+  <div class="favourite-page"></div>
 </template>
 
 <script lang="ts" setup>
