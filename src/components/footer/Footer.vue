@@ -47,9 +47,9 @@
 
 <script lang="ts" setup>
 // import { useViewport } from '@/composables/useViewport'
-import IconLogo from "@/components/icons/icon-logo.vue";
-import IconMapPoint from "@/components/icons/icon-map-point.vue";
-import IconLogoLg from "@/components/icons/icon-logo-lg.vue";
+import IconLogo from '@/components/icons/icon-logo.vue'
+import IconMapPoint from '@/components/icons/icon-map-point.vue'
+import IconLogoLg from '@/components/icons/icon-logo-lg.vue'
 </script>
 
 <style lang="scss" scoped>

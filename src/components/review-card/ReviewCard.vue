@@ -64,9 +64,9 @@
 
 <script setup>
 import { defineProps, ref } from 'vue'
-import Button from '@/components/button/Button.vue'
-import IconHeart from "@/components/icons/icon-heart.vue";
-import IconStar from "@/components/icons/icon-star.vue";
+import Button from '@/components/common/Button.vue'
+import IconHeart from '@/components/icons/icon-heart.vue'
+import IconStar from '@/components/icons/icon-star.vue'
 
 const props = defineProps({
   id: {

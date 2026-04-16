@@ -12,12 +12,17 @@ const props = defineProps({
     type: String,
     default: 'primary'
   },
+  size: {
+    type: String,
+    default: 'block'
+  }
 })
 
 const classList = computed(() => {
   const variants = ['primary', 'outline', 'delete', 'text']
+  const sizes = ['block', 'inline']
 
-  let variant
+  let variant, size
 
   if (variants.includes(props.variant)) {
     variant = `variant-${props.variant}`
@@ -25,8 +30,15 @@ const classList = computed(() => {
     variant = 'variant-primary'
   }
 
+  if (sizes.includes(props.size)) {
+    size = `size-${props.size}`
+  } else {
+    size = 'size-block'
+  }
+
   return {
-    [variant]: true
+    [variant]: true,
+    [size]: true
   }
 })
 </script>
@@ -34,15 +46,22 @@ const classList = computed(() => {
 <style lang="scss" scoped>
   .button-component {
     display: block;
-    width: 100%;
     color: #FFFFFF;
-    font-weight: 700;
     font-family: 'Open Sans', sans-serif;
-    font-size: clamp(0.875rem, 0.875rem + 0vw, 0.875rem);
+    font-weight: 300;
     line-height: 1;
     user-select: none;
     padding: 12px 40px;
     cursor: pointer;
+
+    &.size {
+      &-block {
+        width: 100%
+      }
+      &-inline {
+        width: auto;
+      }
+    }
 
     &.variant {
       &-primary {
@@ -68,6 +87,26 @@ const classList = computed(() => {
         background-color: transparent;
         color: var(--text-color);
       }
+    }
+
+    @media (max-width: 833px) {
+      font-size: 16px;
+    }
+
+    @media (min-width: 834px) and (max-width: 1193px) {
+      font-size: 16px;
+    }
+
+    @media (min-width: 1194px) and (max-width: 1439px) {
+      font-size: 16px;
+    }
+
+    @media (min-width: 1440px) and (max-width: 1919px) {
+      font-size: 20px;
+    }
+
+    @media (min-width: 1920px) {
+      font-size: 24px;
     }
   }
 </style>

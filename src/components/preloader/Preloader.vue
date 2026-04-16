@@ -1,11 +1,13 @@
 <template>
 <div class="preloader fixed flex items-center justify-center">
+  <IconLogoLg />
   <span class="loader"></span>
 </div>
 </template>
 
 <script lang="ts" setup>
 
+import IconLogoLg from '@/components/icons/icon-logo-lg.vue'
 </script>
 
 <style lang="scss" scoped>
@@ -19,9 +21,9 @@
 }
 
 .loader {
-  width: 48px;
-  height: 48px;
-  border: 5px solid var(--text-color);
+  width: 28px;
+  height: 28px;
+  border: 3px solid var(--text-color);
   border-bottom-color: transparent;
   border-radius: 50%;
   display: inline-block;

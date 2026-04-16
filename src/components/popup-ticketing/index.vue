@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-import Button from '@/components/button/index.vue'
+import Button from '@/components/common/index.vue'
 </script>
 
 <style lang="scss" scoped>

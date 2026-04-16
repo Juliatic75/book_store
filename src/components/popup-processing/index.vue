@@ -35,8 +35,8 @@
 </template>
 
 <script setup>
-import Button from '@/components/button/index.vue'
-import IconClose from "@/components/icons/icon-close.vue";
+import Button from '@/components/common/index.vue'
+import IconClose from '@/components/icons/icon-close.vue'
 </script>
 
 <style lang="scss" scoped>

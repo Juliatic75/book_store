@@ -7,12 +7,12 @@
 
     <ul class="menu flex items-center justify-end flex-1 max-lg:hidden">
       <li v-for="(item, i) in menuItems" :key="i">
-        <a href="/" class="hover:underline">{{ item.key }}</a>
+        <router-link :to="item.value" class="hover:underline">{{ item.key }}</router-link>
       </li>
     </ul>
 
     <div class="side-menu flex items-center max-lg:hidden">
-      <router-link class="flex" to="/">
+      <router-link class="flex" to="/cart">
         <IconCart />
       </router-link>
 
@@ -39,22 +39,22 @@
 
 <script setup>
 import { onBeforeUnmount, onMounted, ref } from 'vue'
-import { onBeforeRouteLeave, RouterLink } from 'vue-router';
+import { onBeforeRouteLeave, RouterLink } from 'vue-router'
 import IconCart from '@/components/icons/icon-cart.vue'
 import IconUser from '@/components/icons/icon-user.vue'
-import IconLogo from "@/components/icons/icon-logo.vue";
-import Button from "@/components/button/Button.vue";
-import IconBurgerMenu from "@/components/icons/icon-burger-menu.vue";
-import IconLogoLg from "@/components/icons/icon-logo-lg.vue";
+import IconLogo from '@/components/icons/icon-logo.vue'
+import Button from '@/components/common/Button.vue'
+import IconBurgerMenu from '@/components/icons/icon-burger-menu.vue'
+import IconLogoLg from '@/components/icons/icon-logo-lg.vue'
 
 const isMenuOpen = ref(false)
 
 const menuItems = [
-  { key: 'Книги', value: '' },
+  { key: 'Книги', value: '/catalog' },
   { key: 'Мероприятия', value: '' },
   { key: 'Кофейня', value: '' },
-  { key: 'Избранное', value: '' },
-  { key: 'О нас', value: '' }
+  { key: 'Избранное', value: '/favourites' },
+  { key: 'О нас', value: '/about' }
 ]
 
 const closeMenu = () => {
@@ -114,6 +114,36 @@ onBeforeUnmount(() => {
         width: 100%;
         height: 100%;
       }
+    }
+  }
+
+  @media (max-width: 833px) {
+    .menu {
+      font-size: 16px;
+    }
+  }
+
+  @media (min-width: 834px) and (max-width: 1193px) {
+    .menu {
+      font-size: 16px;
+    }
+  }
+
+  @media (min-width: 1194px) and (max-width: 1439px) {
+    .menu {
+      font-size: 18px;
+    }
+  }
+
+  @media (min-width: 1440px) and (max-width: 1919px) {
+    .menu {
+      font-size: 20px;
+    }
+  }
+
+  @media (min-width: 1920px) {
+    .menu {
+      font-size: 28px;
     }
   }
 }

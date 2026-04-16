@@ -33,13 +33,31 @@ const getComponentTag = computed(() => {
 
 <style lang="scss" scoped>
 .link-component {
-  font-size: clamp(0.875rem, 0.875rem + 0vw, 0.875rem);
-
   color: var(--primary-color);
 
   .line {
     display: flex;
     line-height: 1;
+  }
+
+  @media (max-width: 833px) {
+    font-size: 16px;
+  }
+
+  @media (min-width: 834px) and (max-width: 1193px) {
+    font-size: 16px;
+  }
+
+  @media (min-width: 1194px) and (max-width: 1439px) {
+    font-size: 18px;
+  }
+
+  @media (min-width: 1440px) and (max-width: 1919px) {
+    font-size: 22px;
+  }
+
+  @media (min-width: 1920px) {
+    font-size: 30px;
   }
 }
 </style>

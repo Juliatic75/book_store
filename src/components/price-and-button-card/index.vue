@@ -19,28 +19,28 @@
 </template>
 
 <script setup>
-import Button from '@/components/button/index.vue'
+import Button from '@/components/common/index.vue'
 
 const props = defineProps({
-id: {
-  type: Number,
-  default: null
-},
+  id: {
+    type: Number,
+    default: null
+  },
 
-price: {
-  type: [String, Number],
-  default: ''
-},
+  price: {
+    type: [String, Number],
+    default: ''
+  },
 
-oldPrice: {
-  type: [String, Number],
-  default: ''
-},
+  oldPrice: {
+    type: [String, Number],
+    default: ''
+  },
 
-availability: {
-  type: String,
-  default: ''
-},
+  availability: {
+    type: String,
+    default: ''
+  },
 
 })
 

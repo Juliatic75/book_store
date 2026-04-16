@@ -21,8 +21,7 @@
 </template>
 
 <script setup>
-import { defineProps, ref } from 'vue'
-
+import { defineProps, defineModel, onMounted } from 'vue'
 
 const props = defineProps({
   tabs: {
@@ -31,7 +30,11 @@ const props = defineProps({
   }
 })
 
-const currentTab = ref(props.tabs[0].value || '');
+const currentTab = defineModel('')
+
+onMounted(() => {
+  currentTab.value = props.tabs[0].value.toString() || ''
+})
 </script>
 
 <style lang="scss" scoped>

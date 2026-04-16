@@ -14,9 +14,9 @@
 </template>
 
 <script lang="ts" setup>
-import Textarea from "@/components/common/Textarea.vue";
-import IconStarInactive from "@/components/icons/icon-star-inactive.vue";
-import Button from "@/components/button/Button.vue";
+import Textarea from '@/components/common/Textarea.vue'
+import IconStarInactive from '@/components/icons/icon-star-inactive.vue'
+import Button from '@/components/common/Button.vue'
 </script>
 
 <style lang="scss" scoped>

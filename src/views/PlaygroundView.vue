@@ -108,7 +108,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import Button from '@/components/button/index.vue'
+import Button from '@/components/common/index.vue'
 import BookCard from '@/components/book-card/index.vue'
 import CoffeeCard from '@/components/coffee-card/index.vue'
 import ReviewsCard from '@/components/review-card/index.vue'

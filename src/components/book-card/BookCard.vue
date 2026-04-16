@@ -5,6 +5,14 @@
       <div class="flex justify-center">
         <img :src="props.imgUrl" alt="book-preview">
       </div>
+      <Button
+        @click="isFavourite = !isFavourite"
+        class="button-like absolute top-0 right-0"
+        :class="{ 'is-active': isFavourite }"
+        variant="text"
+      >
+        <IconBookmark />
+      </Button>
     </div>
 
     <div class="title mb-4 text-left">
@@ -18,19 +26,19 @@
       </span>
     </div>
 
-    <div class="price flex justify-between mb-4">
+    <div v-if="!props.enableFavourite" class="price flex justify-between mb-4">
       <span>Цена:</span>
       <span>{{ props.price }}₽</span>
     </div>
 
-    <Button>ДОБАВИТЬ В КОРЗИНУ</Button>
+    <Button v-if="!props.enableFavourite">ДОБАВИТЬ В КОРЗИНУ</Button>
   </div>
 </template>
 
 <script  setup>
-import Button from '@/components/button/Button.vue'
-import { defineProps } from "vue"
-
+import { defineProps, ref } from 'vue'
+import Button from '@/components/common/Button.vue'
+import IconBookmark from '@/components/icons/icon-bookmark.vue'
 
 const props = defineProps({
   id: {
@@ -64,8 +72,14 @@ const props = defineProps({
   price: {
     type: [String, Number],
     default: ''
+  },
+  enableFavourite: {
+    type: Boolean,
+    default: false
   }
 })
+
+const isFavourite = ref(false)
 </script>
 
 <style lang="scss" scoped>
@@ -77,6 +91,14 @@ const props = defineProps({
     .age {
       font-weight: 300;
       line-height: 1;
+    }
+  }
+
+  .button-like {
+    color: var(--text-lighten-color);
+
+    &.is-active {
+      color: var(--delete-color);
     }
   }
 
@@ -97,14 +119,75 @@ const props = defineProps({
   }
 
   .description {
+    line-height: 1;
+
     span {
       font-weight: 300;
-      line-height: 1;
     }
   }
 
   .price {
     font-weight: 500;
+  }
+
+  @media (max-width: 833px) {
+    .book-title {
+      font-size: 16px;
+    }
+    .book-subtitle {
+      font-size: 16px;
+    }
+    .description {
+      font-size: 18px;
+    }
+  }
+
+  @media (min-width: 834px) and (max-width: 1193px) {
+    .book-title {
+      font-size: 18px;
+    }
+    .book-subtitle {
+      font-size: 16px;
+    }
+    .description {
+      font-size: 18px;
+    }
+  }
+
+  @media (min-width: 1194px) and (max-width: 1439px) {
+    .book-title {
+      font-size: 18px;
+    }
+    .book-subtitle {
+      font-size: 16px;
+    }
+    .description {
+      font-size: 18px;
+    }
+  }
+
+  @media (min-width: 1440px) and (max-width: 1919px) {
+    .book-title {
+      font-size: 24px;
+    }
+    .book-subtitle {
+      font-size: 20px;
+    }
+    .description {
+      font-size: 22px;
+    }
+  }
+
+  @media (min-width: 1920px) {
+    .book-title {
+      font-size: 30px;
+    }
+    .book-subtitle {
+      font-size: 24px;
+    }
+    .description {
+      font-size: 24px;
+    }
   }
 }
 </style>

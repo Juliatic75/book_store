@@ -4,10 +4,6 @@
   box-sizing: border-box;
 }
 
-html {
-  font-size: clamp(1rem, 0.818rem + 0.7767vw, 1.75rem);
-}
-
 body {
   margin: 0;
   color: var(--color-text);
@@ -54,13 +50,89 @@ button {
   border: none;
   padding: 0;
   margin: 0;
-  font: inherit;      /* Inherit font-family and size from parent */
-  color: inherit;     /* Inherit text color from parent */
+  font: inherit; /* Inherit font-family and size from parent */
+  color: inherit; /* Inherit text color from parent */
   cursor: pointer;
-  outline: none;      /* Be sure to replace with custom :focus styles */
+  outline: none; /* Be sure to replace with custom :focus styles */
 
   /* Fixes for specific browsers */
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+}
+
+/*--breakpoint-sm: 375px;*/
+/*--breakpoint-md: 834px;*/
+/*--breakpoint-lg: 1194px;*/
+/*--breakpoint-xl: 1440px;*/
+/*--breakpoint-2xl: 1920px;*/
+
+@media (max-width: 833px) {
+  html {
+    font-size: 16px;
+  }
+
+  .font-title {
+    font-size: 20px;
+  }
+
+  .font-subtitle {
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 834px) and (max-width: 1193px) {
+  html {
+    font-size: 18px;
+  }
+
+  .font-title {
+    font-size: 24px;
+  }
+
+  .font-subtitle {
+    font-size: 20px;
+  }
+}
+
+@media (min-width: 1194px) and (max-width: 1439px) {
+  html {
+    font-size: 18px;
+  }
+
+  .font-title {
+    font-size: 24px;
+  }
+
+  .font-subtitle {
+    font-size: 22px;
+  }
+}
+
+@media (min-width: 1440px) and (max-width: 1919px) {
+  html {
+    font-size: 22px;
+  }
+
+  .font-title {
+    font-size: 28px;
+  }
+
+  .font-subtitle {
+    font-size: 28px;
+  }
+}
+
+@media (min-width: 1920px) {
+  html {
+    font-size: 28px;
+  }
+
+  .font-title {
+    font-size: 36px;
+  }
+
+  .font-subtitle {
+    font-size: 36px;
+  }
 }

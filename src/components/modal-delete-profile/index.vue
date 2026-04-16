@@ -31,7 +31,7 @@
 </template>
 
 <script setup>
-import Button from '@/components/button/index.vue'
+import Button from '@/components/common/index.vue'
 import Modal from '@/components/modal/index.vue'
 
 const isOpen = defineModel(false)
