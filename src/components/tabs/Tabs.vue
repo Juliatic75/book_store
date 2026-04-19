@@ -5,7 +5,7 @@
         v-for="(tab, i) in props.tabs"
         :key="i"
         @click="currentTab = tab.value"
-        class="font-subtitle cursor-pointer tab"
+        class="cursor-pointer tab"
         :class="{ 'active': currentTab === tab.value }"
       >
         {{ tab.label }}

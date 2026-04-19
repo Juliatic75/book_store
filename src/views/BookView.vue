@@ -1,7 +1,7 @@
 <template>
   <div class="page book-view">
     <div class="">
-      <div class="grid md:grid-cols-3 md:gap-4">
+      <div class="grid md:grid-cols-3 md:gap-6">
         <div class="max-md:hidden mb-6">
           <img src="/img/book-preview-lg.png" alt="book-preview-lg">
         </div>
@@ -9,7 +9,7 @@
         <div class="md:col-span-2">
           <div class="book-info mb-6 flex justify-between items-start grid-cols-1 sm:grid-cols-2">
             <div class="flex-1">
-              <h1 class="block book-title uppercase font-title mb-2">Ночной свидетель</h1>
+              <h1 class="block book-title uppercase font-title mb-2 font-medium">Ночной свидетель</h1>
               <span class="block color-text-secondary mb-2">Детектив | Дарья Новикова</span>
 
               <div class="rating flex items-center gap-1">
@@ -136,7 +136,7 @@
         <span class="color-text-secondary">4</span>
       </span>
 
-      <div class="grid grid-cols-3 sm:grid-cols-2 md:grid-cols-3 gap-2">
+      <div class="grid grid-cols-3 sm:grid-cols-1 md:grid-cols-3 gap-2">
         <ReviewCard author="Дарья Новикова"
                     description="Блестяще! Граница между безумием и гениальностью стирается с каждой главой. Следователь Стахов — герой нашего времени, заложник не системы, а собственного здравомыслия. "
                     :star-count="4" :like-count="10"/>
@@ -156,7 +156,7 @@
     <div class="similar-books mb-4">
       <span class="block font-subtitle mb-6">ПОХОЖИЕ КНИГИ</span>
 
-      <div class="grid grid-cols-3 sm:grid-cols-2 md:grid-cols-3 gap-2">
+      <div class="grid grid-cols-3 sm:grid-cols-1 md:grid-cols-3 gap-2">
         <BookCard
           v-for="(card, i) in bookCards" :key="i"
           :age="card.age"

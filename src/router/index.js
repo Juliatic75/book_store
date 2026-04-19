@@ -4,6 +4,8 @@ import BookView from '@/views/BookView.vue'
 import FavouritesView from '@/views/FavouritesView.vue'
 import BookCatalogView from '@/views/BookCatalogView.vue'
 import CartView from '@/views/CartView.vue'
+import ProfileView from '@/views/ProfileView.vue'
+import EventsView from '@/views/EventsView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,6 +34,16 @@ const router = createRouter({
       path: '/catalog/:id',
       name: 'book-page',
       component: BookView,
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: ProfileView,
+    },
+    {
+      path: '/events',
+      name: 'events',
+      component: EventsView,
     },
     {
       path: '/about',

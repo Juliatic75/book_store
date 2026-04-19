@@ -36,10 +36,10 @@
     <hr class="md:mb-6 mb-1" />
 
     <div class="md:flex md:justify-between">
-      <span class="color-secondary md:order-2">Политика обработки персональных данных</span>
+      <span class="policy color-secondary md:order-2">Политика обработки персональных данных</span>
 
       <div class="max-md:mt-2 md:order-1">
-        <span class="color-secondary">@2025</span>Chernila
+        <span class="policy color-secondary">@2025</span>Chernila
       </div>
     </div>
   </div>
@@ -56,5 +56,41 @@ import IconLogoLg from '@/components/icons/icon-logo-lg.vue'
 .footer-component {
   margin: 0 16px;
   border-top: 1px solid var(--text-color);
+
+  @media (max-width: 833px) {
+    font-size: 16px;
+
+    .policy {
+      font-size: 14px;
+    }
+  }
+
+  @media (min-width: 834px) and (max-width: 1193px) {
+    font-size: 18px;
+    .policy {
+      font-size: 16px;
+    }
+  }
+
+  @media (min-width: 1194px) and (max-width: 1439px) {
+    font-size: 18px;
+    .policy {
+      font-size: 16px;
+    }
+  }
+
+  @media (min-width: 1440px) and (max-width: 1919px) {
+    font-size: 22px;
+    .policy {
+      font-size: 18px;
+    }
+  }
+
+  @media (min-width: 1920px) {
+    font-size: 24px;
+    .policy {
+      font-size: 20px;
+    }
+  }
 }
 </style>

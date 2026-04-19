@@ -16,7 +16,7 @@
         <IconCart />
       </router-link>
 
-      <router-link class="flex" to="/">
+      <router-link class="flex" to="/profile">
         <IconUser />
       </router-link>
     </div>
@@ -51,7 +51,7 @@ const isMenuOpen = ref(false)
 
 const menuItems = [
   { key: 'Книги', value: '/catalog' },
-  { key: 'Мероприятия', value: '' },
+  { key: 'Мероприятия', value: '/events' },
   { key: 'Кофейня', value: '' },
   { key: 'Избранное', value: '/favourites' },
   { key: 'О нас', value: '/about' }
