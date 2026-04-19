@@ -8,6 +8,11 @@
 
   <span class="mb-4">{{ props.description }}</span>
 
+  <div class="flex gap-6 mb-4">
+    <span class="dot dot-red">Площадь Восстания</span>
+    <span class="dot dot-green">Маяковская</span>
+  </div>
+
   <span class="mb-6">{{ props.address }}</span>
 
   <Button>РАСПИСАНИЕ И БИЛЕТЫ</Button>
@@ -38,6 +43,30 @@ const props = defineProps({
 .event-card-component {
   img {
     width: 100%;
+  }
+
+  .dot {
+    display: inline-flex;
+    align-items: center;
+
+    &-red:before {
+      content: '';
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      margin-right: 8px;
+      border-radius: 50%;
+      background-color: #DB1616;
+    }
+    &-green:before {
+      display: inline-block;
+      content: '';
+      width: 12px;
+      height: 12px;
+      margin-right: 8px;
+      border-radius: 50%;
+      background-color: #0F9C19;
+    }
   }
 }
 </style>
