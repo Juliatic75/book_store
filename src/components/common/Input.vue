@@ -5,8 +5,9 @@
     <input
       v-model="model"
       :id="id"
-      type="text"
+      :type="props.type"
       :placeholder="props.placeholder"
+      :disabled="props.disabled || props.loading"
     />
   </div>
 </template>
@@ -26,6 +27,18 @@ const props = defineProps({
   placeholder: {
     type: String,
     default: ''
+  },
+  type: {
+    type: String,
+    default: 'text'
+  },
+  disabled: {
+    type: Boolean,
+    default: false
+  },
+  loading: {
+    type: Boolean,
+    default: false
   }
 })
 

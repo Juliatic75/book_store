@@ -13,33 +13,43 @@
     </span>
   </div>
 
-  <div class="mb-10">
-    <span class="block font-subtitle mb-8">ДЕТЕКТИВЫ</span>
+  <Loader v-if="isLoading" />
 
-    <div class="grid md:grid-cols-3 sm:grid-cols-1 gap-4 mb-6">
-      <BookCard
-        v-for="(card, i) in bookCards" :key="i"
-        :age="card.age"
-        :author="card.author"
-        :genre="card.genre"
-        :title="card.title"
-        :price="card.price"
-        :description="card.description"
-      />
-    </div>
+  <template v-if="!isLoading">
+    <div class="mb-10">
+      <span class="block font-subtitle mb-8">ДЕТЕКТИВЫ</span>
 
-    <div class="flex justify-center">
-      <Link>Смотреть все книги</Link>
+      <div class="grid md:grid-cols-3 sm:grid-cols-1 gap-4 mb-6">
+        <BookCard
+          v-for="(book, i) in books" :key="i"
+          :id="book.id"
+          :age="book.age_rating"
+          :author="book.author"
+          :genre="book.genre"
+          :title="book.title"
+          :price="book.price"
+          :img-url="book.image_url"
+          :description="book.description"
+        />
+      </div>
+
+      <div class="flex justify-center">
+        <Link>Смотреть все книги</Link>
+      </div>
     </div>
-  </div>
+  </template>
 </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import api from '@/api'
 import BookCard from '@/components/book-card/BookCard.vue'
 import Link from '@/components/common/Link.vue'
+import Loader from '@/components/common/Loader.vue'
 
+const isLoading = ref(false)
+const books = ref([])
 const currentCategory = ref('all')
 
 const categories = [
@@ -50,32 +60,22 @@ const categories = [
   { label: 'Ужасы', value: 'horror' },
 ]
 
-const bookCards = [
-  {
-    age: '16',
-    author: 'Ольга Быкова',
-    genre: 'Роман',
-    title: 'В метре от тебя',
-    price: '1299',
-    description: 'Каждый день она едет в одном поезде с мужчиной своей мечты. Каждый день они стоят в разных концах вагона, разделенные толпой.'
-  },
-  {
-    age: '16',
-    author: 'Ольга Быкова',
-    genre: 'Роман',
-    title: 'В метре от тебя',
-    price: '1299',
-    description: 'Каждый день она едет в одном поезде с мужчиной своей мечты. Каждый день они стоят в разных концах вагона, разделенные толпой.'
-  },
-  {
-    age: '16',
-    author: 'Ольга Быкова',
-    genre: 'Роман',
-    title: 'В метре от тебя',
-    price: '1299',
-    description: 'Каждый день она едет в одном поезде с мужчиной своей мечты. Каждый день они стоят в разных концах вагона, разделенные толпой.'
+const fetchBooks = async () => {
+  isLoading.value = true
+
+  try {
+    const { results } = await api.Products.getProducts()
+    books.value = results
+  } catch (err) {
+    console.warn('Error', err)
+  } finally {
+    isLoading.value = false
   }
-]
+}
+
+onMounted(() => {
+  fetchBooks()
+})
 </script>
 
 <style lang="scss" scoped>

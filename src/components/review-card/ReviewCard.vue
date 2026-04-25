@@ -74,7 +74,7 @@ const props = defineProps({
     default: null,
   },
   author: {
-    type: String,
+    type: [String, Number],
     default: '',
   },
   starCount: {

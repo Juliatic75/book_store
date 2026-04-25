@@ -5,8 +5,7 @@
 </div>
 </template>
 
-<script lang="ts" setup>
-
+<script setup>
 import IconLogoLg from '@/components/icons/icon-logo-lg.vue'
 </script>
 

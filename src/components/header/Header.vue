@@ -12,11 +12,11 @@
     </ul>
 
     <div class="side-menu flex items-center max-lg:hidden">
-      <router-link class="flex" to="/cart">
+      <router-link v-if="isLogged" class="flex" to="/cart">
         <IconCart />
       </router-link>
 
-      <router-link class="flex" to="/profile">
+      <router-link class="flex" :to="getProfileLink">
         <IconUser />
       </router-link>
     </div>
@@ -38,14 +38,17 @@
 </template>
 
 <script setup>
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { onBeforeUnmount, onMounted, ref, computed } from 'vue'
 import { onBeforeRouteLeave, RouterLink } from 'vue-router'
+import { useAuthStore } from '@/stores/auth.js'
 import IconCart from '@/components/icons/icon-cart.vue'
 import IconUser from '@/components/icons/icon-user.vue'
 import IconLogo from '@/components/icons/icon-logo.vue'
 import Button from '@/components/common/Button.vue'
 import IconBurgerMenu from '@/components/icons/icon-burger-menu.vue'
 import IconLogoLg from '@/components/icons/icon-logo-lg.vue'
+
+const { isLogged } = useAuthStore()
 
 const isMenuOpen = ref(false)
 
@@ -60,6 +63,11 @@ const menuItems = [
 const closeMenu = () => {
   isMenuOpen.value = false
 }
+
+const getProfileLink = computed(() => {
+  if (!isLogged) return '/login'
+  return '/profile'
+})
 
 onBeforeRouteLeave(() => {
   closeMenu()

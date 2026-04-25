@@ -16,7 +16,7 @@
     </div>
 
     <div class="title mb-4 text-left">
-      <span class="book-title">{{ props.title }}</span>
+      <router-link :to="`/catalog/${props.id}`" class="book-title">{{ props.title }}</router-link>
       <span class="subtitle">{{ props.genre }} | {{ props.author }}</span>
     </div>
 
@@ -95,6 +95,7 @@ const isFavourite = ref(false)
   }
 
   .button-like {
+    position: absolute !important;
     color: var(--text-lighten-color);
 
     &.is-active {

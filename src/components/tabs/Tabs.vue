@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-import { defineProps, defineModel, onMounted } from 'vue'
+import { defineProps, ref, onMounted } from 'vue'
 
 const props = defineProps({
   tabs: {
@@ -30,7 +30,7 @@ const props = defineProps({
   }
 })
 
-const currentTab = defineModel('')
+const currentTab = ref('')
 
 onMounted(() => {
   currentTab.value = props.tabs[0].value.toString() || ''

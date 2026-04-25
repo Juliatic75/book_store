@@ -1,6 +1,18 @@
 <template>
-  <button class="button-component" :class="classList">
+  <button
+    class="button-component relative"
+    :class="classList"
+    :role="props.role"
+    :disabled="props.loading"
+  >
     <slot></slot>
+
+    <span
+      v-if="loading"
+      class="loader-container absolute left-0 top-0 w-full h-full flex justify-center items-center"
+    >
+      <span class="loader"></span>
+    </span>
   </button>
 </template>
 
@@ -12,9 +24,17 @@ const props = defineProps({
     type: String,
     default: 'primary'
   },
+  role: {
+    type: String,
+    default: 'button'
+  },
   size: {
     type: String,
     default: 'block'
+  },
+  loading: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -72,6 +92,15 @@ const classList = computed(() => {
         background-color: #FFFFFF;
         box-shadow: 0 0 0 1px var(--primary-color) inset;
         color: var(--primary-color);
+
+        .loader-container {
+          background-color: rgba(#FFFFFF, 0.5);
+        }
+
+        .loader {
+          border: 3px solid var(--primary-color);
+          border-bottom-color: transparent;
+        }
       }
 
       &-delete {
@@ -107,6 +136,30 @@ const classList = computed(() => {
 
     @media (min-width: 1920px) {
       font-size: 24px;
+    }
+
+    .loader-container {
+      background-color: rgba(#FFFFFF, 0.2);
+    }
+
+    .loader {
+      width: 32px;
+      height: 32px;
+      border: 3px solid #FFFFFF;
+      border-bottom-color: transparent;
+      border-radius: 50%;
+      display: inline-block;
+      box-sizing: border-box;
+      animation: rotation 1s linear infinite;
+    }
+
+    @keyframes rotation {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
     }
   }
 </style>
