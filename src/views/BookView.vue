@@ -123,14 +123,15 @@
       <div class="reviews mb-6">
         <span class="block font-subtitle mb-6">
           ОТЗЫВЫ&nbsp;
-          <span class="color-text-secondary">{{ bookInfo.reviews.length }}</span>
+          <span v-if="bookInfo.reviews.length" class="color-text-secondary">{{ bookInfo.reviews.length }}</span>
         </span>
 
         <div class="grid grid-cols-3 sm:grid-cols-1 md:grid-cols-3 gap-2">
+          <span v-if="!bookInfo.reviews.length">Нет отзывов</span>
           <ReviewCard
             v-for="(item, i) in bookInfo.reviews"
             :key="i"
-            :author="item.user_id"
+            :author="item.user"
             :description="item.text"
             :star-count="item.rating"
           />
@@ -145,21 +146,25 @@
     <div class="similar-books mb-4">
       <span class="block font-subtitle mb-6">ПОХОЖИЕ КНИГИ</span>
 
-      <div class="grid grid-cols-3 sm:grid-cols-1 md:grid-cols-3 gap-2">
+      <Loader v-if="isSimilarLoading" />
+      <div v-if="!isSimilarLoading" class="grid grid-cols-3 sm:grid-cols-1 md:grid-cols-3 gap-2">
+        <span v-if="!similarBooks.length">Нет похожих книг</span>
         <BookCard
-          v-for="(card, i) in bookCards" :key="i"
-          :age="card.age"
+          v-for="(card, i) in similarBooks"
+          :key="i"
+          :age="card.age_rating"
           :author="card.author"
           :genre="card.genre"
           :title="card.title"
           :price="card.price"
+          :img-url="card.image_url"
           :description="card.description"
         />
       </div>
     </div>
 
     <div class="flex justify-center">
-      <Link>Смотреть все книги</Link>
+      <Link to="/catalog">Смотреть все книги</Link>
     </div>
   </div>
 </template>
@@ -184,6 +189,7 @@ const { user } = useAuthStore()
 const route = useRoute()
 
 const isLoading = ref(false)
+const isSimilarLoading = ref(false)
 const bookInfo = ref({
   title: '',
   age_rating: '',
@@ -202,6 +208,8 @@ const bookInfo = ref({
   reviews: []
 })
 
+const similarBooks = ref([])
+
 const tabs = [
   {label: 'ОПИСАНИЕ', value: 'desc'},
   {label: 'ХАРАКТЕРИСТИКИ', value: 'chars'}
@@ -218,17 +226,6 @@ const characteristics = [
   {key: 'Тип обложки', value: 'Твердая'}
 ]
 
-const bookCards = [
-  {
-    age: '16',
-    author: 'Ольга Быкова',
-    genre: 'Роман',
-    title: 'В метре от тебя',
-    price: '1299',
-    description: 'Каждый день она едет в одном поезде с мужчиной своей мечты. Каждый день они стоят в разных концах вагона, разделенные толпой.'
-  }
-]
-
 const showReviewSection = computed(() => {
   const reviewsIds = bookInfo.value.reviews.map(item => item.user_id)
 
@@ -237,17 +234,34 @@ const showReviewSection = computed(() => {
 
 const fetchBook = async () => {
   try {
-    const res = await api.Products.getProduct(route.params.id)
-    bookInfo.value = res
+    bookInfo.value = await api.Products.getProduct(route.params.id)
   } catch (err) {
     console.warn('Error', err)
   }
 }
 
+const fetchBooks = async (genre = ['novel', 'detective']) => {
+  isSimilarLoading.value = true
+
+  try {
+    const { results } = await api.Products.getProducts({
+      ...(!!genre) && { genre }
+    })
+
+    similarBooks.value = results.filter(result => result.id !== bookInfo.value.id)
+  } catch (err) {
+    console.warn('Error', err)
+  } finally {
+    isSimilarLoading.value = false
+  }
+}
+
 onMounted(async () => {
   isLoading.value = true
-  fetchBook()
+  await fetchBook()
   isLoading.value = false
+
+  await fetchBooks(bookInfo.value.genre)
 })
 </script>
 

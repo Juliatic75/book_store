@@ -1,21 +1,22 @@
 import axios from 'axios'
+import qs from 'qs'
 
 const whoami = JSON.parse(localStorage.getItem('whoami') || '{}')
 
 class HttpClient {
   constructor (baseURL = '/api', defaultHeaders = {}) {
-    // Создаём экземпляр axios с базовыми настройками
     this.instance = axios.create({
       baseURL,
       headers: defaultHeaders,
-      timeout: 10000, // таймаут по умолчанию (опционально)
+      timeout: 10000,
+      paramsSerializer: {
+        serialize: (params) => qs.stringify(params, { arrayFormat: 'repeat' })
+      }
     })
 
-    // Добавляем интерцептор для обработки ошибок (опционально)
     this.instance.interceptors.response.use(
       (response) => response,
       (error) => {
-        // Можно логировать ошибки или выбрасывать в едином формате
         console.error('HTTP Error:', error.response?.status, error.message)
         return Promise.reject(error)
       }
@@ -47,9 +48,26 @@ class HttpClient {
   }
 
   // PUT-запрос
-  async put (url, data = {}, config = {}) {
+  async put (url, data = {}, config = {
+    headers: {
+      ...(whoami.token) && { Authorization: `Token ${whoami.token}` }
+    }
+  }) {
     try {
       const response = await this.instance.put(url, data, config)
+      return response.data
+    } catch (error) {
+      throw this._normalizeError(error)
+    }
+  }
+
+  async patch (url, data = {}, config = {
+    headers: {
+      ...(whoami.token) && { Authorization: `Token ${whoami.token}` }
+    }
+  }) {
+    try {
+      const response = await this.instance.patch(url, data, config)
       return response.data
     } catch (error) {
       throw this._normalizeError(error)

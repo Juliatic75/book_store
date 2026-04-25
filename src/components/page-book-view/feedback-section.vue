@@ -25,7 +25,7 @@
       </div>
 
       <Button
-        @click="createFeedback"
+        @click="createReview"
         variant="outline"
         :loading="isLoading"
       >
@@ -60,13 +60,13 @@ const setRating = (index) => {
   form.value.rating = index + 1
 }
 
-const createFeedback = async () => {
+const createReview = async () => {
   if (!form.value.rating || !form.value.text) return
 
   try {
     isLoading.value = true
 
-    await api.Events.postEvent({
+    await api.Reviews.postReview({
       product: props.product,
       text: form.value.text,
       rating: form.value.rating

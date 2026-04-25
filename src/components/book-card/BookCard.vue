@@ -17,7 +17,7 @@
 
     <div class="title mb-4 text-left">
       <router-link :to="`/catalog/${props.id}`" class="book-title">{{ props.title }}</router-link>
-      <span class="subtitle">{{ props.genre }} | {{ props.author }}</span>
+      <span class="subtitle">{{ getGenre }} {{ getGenre || props.author ? '|' : '' }} {{ props.author }}</span>
     </div>
 
     <div class="description mb-6 text-left flex-1">
@@ -36,7 +36,7 @@
 </template>
 
 <script  setup>
-import { defineProps, ref } from 'vue'
+import { defineProps, ref, computed } from 'vue'
 import Button from '@/components/common/Button.vue'
 import IconBookmark from '@/components/icons/icon-bookmark.vue'
 
@@ -80,6 +80,15 @@ const props = defineProps({
 })
 
 const isFavourite = ref(false)
+
+const genres = [
+  { key: 'Роман', value: 'novel' },
+  { key: 'Детектив', value: 'detective' },
+]
+
+const getGenre = computed(() => {
+  return genres.find(genre => genre.value === props.genre)?.key ?? ''
+})
 </script>
 
 <style lang="scss" scoped>
