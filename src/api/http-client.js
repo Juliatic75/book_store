@@ -26,7 +26,12 @@ class HttpClient {
   // GET-запрос
   async get (url, config = {}) {
     try {
-      const response = await this.instance.get(url, config)
+      const response = await this.instance.get(url, {
+        ...config,
+        headers: {
+          ...(whoami.token) && { Authorization: `Token ${whoami.token}` }
+        }
+      })
       return response.data
     } catch (error) {
       throw this._normalizeError(error)
@@ -67,7 +72,12 @@ class HttpClient {
     }
   }) {
     try {
-      const response = await this.instance.patch(url, data, config)
+      const response = await this.instance.patch(url, data, {
+        ...config,
+        headers: {
+          ...(whoami.token) && { Authorization: `Token ${whoami.token}` }
+        }
+      })
       return response.data
     } catch (error) {
       throw this._normalizeError(error)
@@ -75,9 +85,18 @@ class HttpClient {
   }
 
   // DELETE-запрос
-  async delete (url, config = {}) {
+  async delete (url, config = {
+    headers: {
+      ...(whoami.token) && { Authorization: `Token ${whoami.token}` }
+    }
+  }) {
     try {
-      const response = await this.instance.delete(url, config)
+      const response = await this.instance.delete(url, {
+        ...config,
+        headers: {
+          ...(whoami.token) && { Authorization: `Token ${whoami.token}` }
+        }
+      })
       return response.data
     } catch (error) {
       throw this._normalizeError(error)

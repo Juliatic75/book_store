@@ -115,6 +115,12 @@ const classList = computed(() => {
         padding: 0;
         background-color: transparent;
         color: var(--text-color);
+
+        .loader {
+          width: 16px;
+          height: 16px;
+          border-width: 2px;
+        }
       }
     }
 

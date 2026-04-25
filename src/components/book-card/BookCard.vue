@@ -6,10 +6,11 @@
         <img :src="props.imgUrl" alt="book-preview">
       </div>
       <Button
-        @click="isFavourite = !isFavourite"
+        @click="processFavourites"
         class="button-like absolute top-0 right-0"
-        :class="{ 'is-active': isFavourite }"
+        :class="{ 'is-active': isLocalFavorite }"
         variant="text"
+        :loading="isFavoritesLoading"
       >
         <IconBookmark />
       </Button>
@@ -36,7 +37,8 @@
 </template>
 
 <script  setup>
-import { defineProps, ref, computed } from 'vue'
+import { defineProps, ref, computed, onMounted, defineEmits } from 'vue'
+import api from '@/api'
 import Button from '@/components/common/Button.vue'
 import IconBookmark from '@/components/icons/icon-bookmark.vue'
 
@@ -73,13 +75,20 @@ const props = defineProps({
     type: [String, Number],
     default: ''
   },
+  isFavorite: {
+    type: Boolean,
+    default: false
+  },
   enableFavourite: {
     type: Boolean,
     default: false
   }
 })
 
-const isFavourite = ref(false)
+const emit = defineEmits(['on-favourite-delete'])
+
+const isLocalFavorite = ref(false)
+const isFavoritesLoading = ref(false)
 
 const genres = [
   { key: 'Роман', value: 'novel' },
@@ -88,6 +97,54 @@ const genres = [
 
 const getGenre = computed(() => {
   return genres.find(genre => genre.value === props.genre)?.key ?? ''
+})
+
+const processFavourites = () => {
+  if (!isLocalFavorite.value) {
+    fetchAddFavourite()
+  } else {
+    fetchDeleteFavourite()
+  }
+}
+
+const fetchAddFavourite = async () => {
+  if (!props.id) return
+
+  isFavoritesLoading.value = true
+
+  try {
+    await api.Favourites.postAddFavourite({
+      product_id: props.id
+    })
+
+    isLocalFavorite.value = true
+  } catch (err) {
+    console.warn('Error', err)
+  } finally {
+    isFavoritesLoading.value = false
+  }
+}
+
+const fetchDeleteFavourite = async () => {
+  if (!props.id) return
+  isFavoritesLoading.value = true
+
+  try {
+    await api.Favourites.deleteFavourite({
+      product_id: props.id
+    })
+
+    isLocalFavorite.value = false
+    emit('on-favourite-delete')
+  } catch (err) {
+    console.warn('Error', err)
+  } finally {
+    isFavoritesLoading.value = false
+  }
+}
+
+onMounted(() => {
+  isLocalFavorite.value = props.isFavorite
 })
 </script>
 

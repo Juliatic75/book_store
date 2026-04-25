@@ -2,15 +2,21 @@
   <div class="page favourites-page">
     <h1 class="font-title mb-8">ИЗБРАННОЕ</h1>
 
-    <div class="grid md:grid-cols-2 sm:grid-cols-1 gap-4">
+    <Loader v-if="isLoading" />
+
+    <div v-if="!isLoading" class="grid md:grid-cols-2 sm:grid-cols-1 gap-4">
+      <span v-if="!bookCards.length">Нет данных</span>
       <BookCard
         v-for="(card, i) in bookCards" :key="i"
-        :age="card.age"
+        :id="card.id"
+        :age="card.age_rating"
         :author="card.author"
         :genre="card.genre"
         :title="card.title"
         :price="card.price"
+        :img-url="card.image_url"
         :description="card.description"
+        is-favorite
         enable-favourite
       />
     </div>
@@ -25,44 +31,34 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup>
+import { ref, onMounted } from 'vue'
+import api from '@/api'
 import BookCard from '@/components/book-card/BookCard.vue'
 import Button from '@/components/common/Button.vue'
+import Loader from '@/components/common/Loader.vue'
 
-const bookCards = [
-  {
-    age: '16',
-    author: 'Ольга Быкова',
-    genre: 'Роман',
-    title: 'В метре от тебя',
-    price: '1299',
-    description: 'Каждый день она едет в одном поезде с мужчиной своей мечты. Каждый день они стоят в разных концах вагона, разделенные толпой.'
-  },
-  {
-    age: '16',
-    author: 'Ольга Быкова',
-    genre: 'Роман',
-    title: 'В метре от тебя',
-    price: '1299',
-    description: 'Каждый день она едет в одном поезде с мужчиной своей мечты. Каждый день они стоят в разных концах вагона, разделенные толпой.'
-  },
-  {
-    age: '16',
-    author: 'Ольга Быкова',
-    genre: 'Роман',
-    title: 'В метре от тебя',
-    price: '1299',
-    description: 'Каждый день она едет в одном поезде с мужчиной своей мечты. Каждый день они стоят в разных концах вагона, разделенные толпой.'
-  },
-  {
-    age: '16',
-    author: 'Ольга Быкова',
-    genre: 'Роман',
-    title: 'В метре от тебя',
-    price: '1299',
-    description: 'Каждый день она едет в одном поезде с мужчиной своей мечты. Каждый день они стоят в разных концах вагона, разделенные толпой.'
+const isLoading = ref(false)
+
+const bookCards = ref([])
+
+const fetchFavourites = async () => {
+  isLoading.value = true
+
+  try {
+    const { results } = await api.Favourites.getFavourites()
+
+    bookCards.value = results
+  } catch (err) {
+    console.warn('Error', err)
+  } finally {
+    isLoading.value = false
   }
-]
+}
+
+onMounted(() => {
+  fetchFavourites()
+})
 </script>
 
 <style lang="scss" scoped>

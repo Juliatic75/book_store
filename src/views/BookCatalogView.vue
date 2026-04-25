@@ -37,6 +37,7 @@
             v-for="(book, i) in genre.books" :key="i"
             :id="book.id"
             :age="book.age_rating"
+            :is-favorite="book.is_favorite"
             :author="book.author"
             :genre="book.genre"
             :title="book.title"
@@ -90,8 +91,6 @@ const genresBooksMap = computed(() => {
       books
     }
   })
-
-  console.log(result)
 
   return result
 })

@@ -23,7 +23,7 @@
 </template>
 
 <script setup>
-import { defineProps } from "vue"
+import { defineProps } from 'vue'
 
 const props = defineProps({
 
@@ -63,8 +63,6 @@ const props = defineProps({
   background-color: var(--lighten-color);
   margin-top: 24px;
   width: 460px;
-  
-  
 
   .information {
     .book-title {
@@ -89,7 +87,7 @@ const props = defineProps({
         font-weight: 300;
         line-height: 1;
       }
-    } 
+    }
   }
 
   .titel{
