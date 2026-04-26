@@ -6,6 +6,7 @@
         <img :src="props.imgUrl" alt="book-preview">
       </div>
       <Button
+        v-if="isLogged"
         @click="processFavourites"
         class="button-like absolute top-0 right-0"
         :class="{ 'is-active': isLocalFavorite }"
@@ -32,12 +33,13 @@
       <span>{{ props.price }}₽</span>
     </div>
 
-    <Button v-if="!props.enableFavourite">ДОБАВИТЬ В КОРЗИНУ</Button>
+    <Button v-if="!props.enableFavourite" @click="fetchAddToCart" :loading="isCartLoading">ДОБАВИТЬ В КОРЗИНУ</Button>
   </div>
 </template>
 
 <script  setup>
 import { defineProps, ref, computed, onMounted, defineEmits } from 'vue'
+import { useAuthStore } from '@/stores/auth.js'
 import api from '@/api'
 import Button from '@/components/common/Button.vue'
 import IconBookmark from '@/components/icons/icon-bookmark.vue'
@@ -85,10 +87,12 @@ const props = defineProps({
   }
 })
 
+const { isLogged } = useAuthStore()
 const emit = defineEmits(['on-favourite-delete'])
 
 const isLocalFavorite = ref(false)
 const isFavoritesLoading = ref(false)
+const isCartLoading = ref(false)
 
 const genres = [
   { key: 'Роман', value: 'novel' },
@@ -140,6 +144,22 @@ const fetchDeleteFavourite = async () => {
     console.warn('Error', err)
   } finally {
     isFavoritesLoading.value = false
+  }
+}
+
+const fetchAddToCart = async () => {
+  isCartLoading.value = true
+
+  try {
+    await api.Cart.postAddToCart({
+      item_type: 'book',
+      item_id: props.id,
+      quantity: 1
+    })
+  } catch (err) {
+    console.warn('Error', err)
+  } finally {
+    isCartLoading.value = false
   }
 }
 

@@ -65,7 +65,7 @@
                   </div>
                 </div>
 
-                <Button>ДОБАВИТЬ В КОРЗИНУ</Button>
+                <Button @click="fetchAddToCart" :loading="isCartLoading">ДОБАВИТЬ В КОРЗИНУ</Button>
               </div>
             </div>
           </div>
@@ -116,7 +116,7 @@
             </div>
           </div>
 
-          <Button>ДОБАВИТЬ В КОРЗИНУ</Button>
+          <Button @click="fetchAddToCart" :loading="isCartLoading">ДОБАВИТЬ В КОРЗИНУ</Button>
         </div>
       </div>
 
@@ -208,6 +208,7 @@ const bookInfo = ref({
   reviews: []
 })
 
+const isCartLoading = ref(false)
 const similarBooks = ref([])
 
 const tabs = [
@@ -237,6 +238,22 @@ const fetchBook = async () => {
     bookInfo.value = await api.Products.getProduct(route.params.id)
   } catch (err) {
     console.warn('Error', err)
+  }
+}
+
+const fetchAddToCart = async () => {
+  isCartLoading.value = true
+
+  try {
+    await api.Cart.postAddToCart({
+      item_type: 'book',
+      item_id: bookInfo.value.id,
+      quantity: 1
+    })
+  } catch (err) {
+    console.warn('Error', err)
+  } finally {
+    isCartLoading.value = false
   }
 }
 

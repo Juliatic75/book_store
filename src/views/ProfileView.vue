@@ -13,6 +13,7 @@
 
         <div class="form md:col-span-6">
           <div class="flex flex-col gap-6">
+            <Input v-model="userForm.username" label="Логин" placeholder="Логин" disabled />
             <Input v-model="userForm.lastName" label="Фамилия *" placeholder="Фамилия" />
             <Input v-model="userForm.firstName" label="Имя *" placeholder="Имя" />
             <Input v-model="userForm.patronymic" label="Отчество *" placeholder="Отчество" />
@@ -27,9 +28,15 @@
             <Input v-model="userForm.phone" label="Ваш номер телефона *" placeholder="Номер телефона" class="md:col-span-6" />
             <Input v-model="userForm.email" label="Ваш email *" placeholder="Почта email" class="md:col-span-6" />
 
-            <Button variant="delete" class="md:col-span-6 md:order-6">УДАЛИТЬ ПРОФИЛЬ</Button>
             <Button
-              @click="updateUserMe"
+              @click="logoutUser"
+              variant="delete"
+              class="md:col-span-6 md:order-6"
+            >
+              ВЫЙТИ ИЗ АККАУНТА
+            </Button>
+            <Button
+              @click="fetchUpdateUserMe"
               :loading="isUpdateLoading"
               class="md:col-span-6"
             >
@@ -40,13 +47,20 @@
       </div>
     </template>
 
-    <template #orders></template>
+    <template #orders>
+      <div class="mt-8">
+        <div class="grid gap-5 md:grid-cols-3 sm:grid-cols-1">
+          <span>Нет заказов</span>
+        </div>
+      </div>
+    </template>
 
     <template #feedback>
       <div class="mt-8">
         <Loader v-if="isReviewsLoading" />
 
         <div v-if="!isReviewsLoading" class="grid gap-5 md:grid-cols-3 sm:grid-cols-1">
+          <span v-if="!reviews.length">Нет отзывов</span>
           <ReviewCard
             v-for="(review, i) in reviews"
             :key="i"
@@ -71,13 +85,14 @@ import Input from '@/components/common/Input.vue'
 import Button from '@/components/common/Button.vue'
 import Loader from '@/components/common/Loader.vue'
 
-const { user } = useAuthStore()
+const { user, logout } = useAuthStore()
 
 const isLoading = ref(false)
 const isUpdateLoading = ref(false)
 const isReviewsLoading = ref(false)
 
 const currentTab = ref('')
+const reviews = ref([])
 const userForm = ref({
   email: '',
   phone: '',
@@ -86,12 +101,18 @@ const userForm = ref({
   lastName: '',
   patronymic: '',
 })
-const reviews = ref([])
+
+const tabs = [
+  { label: 'Личные данные', value: 'profile' },
+  { label: 'Заказы', value: 'orders' },
+  { label: 'Мои отзывы', value: 'feedback' }
+]
 
 const fetchUser = async () => {
   isLoading.value = true
   try {
     const res = await api.Auth.whoami()
+    userForm.value.username = res.username
     userForm.value.firstName = res.first_name
     userForm.value.lastName = res.last_name
     userForm.value.patronymic = res.patronymic
@@ -104,7 +125,7 @@ const fetchUser = async () => {
   }
 }
 
-const updateUserMe = async () => {
+const fetchUpdateUserMe = async () => {
   isUpdateLoading.value = true
 
   try {
@@ -138,11 +159,10 @@ const fetchReviews = async () => {
   }
 }
 
-const tabs = [
-  { label: 'Личные данные', value: 'profile' },
-  { label: 'Заказы', value: 'orders' },
-  { label: 'Мои отзывы', value: 'feedback' }
-]
+const logoutUser = () => {
+  logout()
+  window.location.replace('/')
+}
 
 watch(currentTab, () => {
   if (currentTab.value === 'feedback') {

@@ -32,7 +32,7 @@
 </template>
 
 <script setup>
-import { defineProps } from "vue"
+import { defineProps } from 'vue'
 
 const props = defineProps({
   id: {
@@ -42,17 +42,17 @@ const props = defineProps({
 
   imgUrl: {
     type: String,
-    default: "/img/coffee-preview.png",
+    default: '/img/coffee-preview.png',
   },
 
   title: {
     type: String,
-    default: "",
+    default: '',
   },
 
   description: {
     type: String,
-    default: "",
+    default: '',
   },
 
   price: {
@@ -64,9 +64,9 @@ const props = defineProps({
     type: String,
     default: '',
   },
-});
+})
 
-console.log(props);
+console.log(props)
 
 </script>
 

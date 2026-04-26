@@ -5,7 +5,7 @@ const client = new HttpClient()
 const user = JSON.parse(localStorage.getItem('whoami') || '{}')
 
 export const register = (data) => {
-  return client.post('/register', data)
+  return client.post('/register/', data)
 }
 
 export const login = (data) => {
