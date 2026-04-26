@@ -33,12 +33,24 @@
       <span>{{ props.price }}₽</span>
     </div>
 
-    <Button v-if="!props.enableFavourite" @click="fetchAddToCart" :loading="isCartLoading">ДОБАВИТЬ В КОРЗИНУ</Button>
+    <Button
+      v-if="!props.enableFavourite && !props.isInCart"
+      @click="fetchAddToCart"
+      :loading="isCartLoading"
+    >
+      ДОБАВИТЬ В КОРЗИНУ
+    </Button>
+
+    <div v-if="!props.enableFavourite && props.isInCart" class="count flex items-center justify-between">
+      <Button size="inline">-</Button>
+      <span>{{ localCount }}</span>
+      <Button @click="increase" size="inline">+</Button>
+    </div>
   </div>
 </template>
 
 <script  setup>
-import { defineProps, ref, computed, onMounted, defineEmits } from 'vue'
+import { defineProps, ref, computed, onMounted, defineEmits, watch } from 'vue'
 import { useAuthStore } from '@/stores/auth.js'
 import api from '@/api'
 import Button from '@/components/common/Button.vue'
@@ -84,15 +96,24 @@ const props = defineProps({
   enableFavourite: {
     type: Boolean,
     default: false
+  },
+  isInCart: {
+    type: Boolean,
+    default: false
+  },
+  quantity: {
+    type: Number,
   }
 })
 
 const { isLogged } = useAuthStore()
-const emit = defineEmits(['on-favourite-delete'])
+const emit = defineEmits(['on-favourite-delete', 'on-cart-add'])
 
 const isLocalFavorite = ref(false)
 const isFavoritesLoading = ref(false)
 const isCartLoading = ref(false)
+const countTimeout = ref(null)
+const localCount = ref(1)
 
 const genres = [
   { key: 'Роман', value: 'novel' },
@@ -102,6 +123,15 @@ const genres = [
 const getGenre = computed(() => {
   return genres.find(genre => genre.value === props.genre)?.key ?? ''
 })
+
+const increase = () => {
+  clearTimeout(countTimeout.value)
+  localCount.value++
+
+  countTimeout.value = setTimeout(() => {
+    fetchAddToCart()
+  }, 500)
+}
 
 const processFavourites = () => {
   if (!isLocalFavorite.value) {
@@ -156,12 +186,21 @@ const fetchAddToCart = async () => {
       item_id: props.id,
       quantity: 1
     })
+    emit('on-cart-add')
   } catch (err) {
     console.warn('Error', err)
   } finally {
     isCartLoading.value = false
   }
 }
+
+watch(props, () => {
+  if (props.quantity) {
+    localCount.value = props.quantity
+  }
+}, {
+  immediate: true
+})
 
 onMounted(() => {
   isLocalFavorite.value = props.isFavorite

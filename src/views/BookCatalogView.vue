@@ -23,6 +23,9 @@
           :price="book.price"
           :img-url="book.image_url"
           :description="book.description"
+          :quantity="book.quantity"
+          :is-in-cart="isBookInCart(book.id)"
+          @on-cart-add="fetchCart"
         />
       </div>
     </div>
@@ -44,6 +47,9 @@
             :price="book.price"
             :img-url="book.image_url"
             :description="book.description"
+            :quantity="book.quantity"
+            :is-in-cart="isBookInCart(book.id)"
+            @on-cart-add="fetchCart"
           />
         </div>
       </div>
@@ -67,6 +73,7 @@ import Tabs from '@/components/tabs/Tabs.vue'
 const isLoading = ref(false)
 const books = ref([])
 const currentTab = ref('novel')
+const cartItems = ref([])
 
 const genres = [
   { label: 'Романтика', value: 'novel' },
@@ -85,6 +92,14 @@ const genresBooksMap = computed(() => {
   genres.forEach(genre => {
     const books = getBooks(genre.value)
 
+    books.forEach(book => {
+      const index = cartItems.value.findIndex(item => item.item_id === book.id)
+
+      if (index !== -1) {
+        book.quantity = cartItems.value[index].quantity
+      }
+    })
+
     result[genre.value] = {
       label: genre.label,
       value: genre.value,
@@ -94,6 +109,10 @@ const genresBooksMap = computed(() => {
 
   return result
 })
+
+const isBookInCart = (id) => {
+  return cartItems.value.findIndex(item => item.item_id === id) !== -1
+}
 
 const getBooks = (genre) => {
   return books.value.filter(book => book.genre === genre)
@@ -115,6 +134,16 @@ const fetchBooks = async (genre = ['novel', 'detective']) => {
   }
 }
 
+const fetchCart = async () => {
+  try {
+    const { items } = await api.Cart.getCart()
+
+    cartItems.value = items
+  } catch (err) {
+    console.warn('Error', err)
+  }
+}
+
 watch(currentTab, () => {
   if (currentTab.value) {
     fetchBooks([currentTab.value])
@@ -125,6 +154,7 @@ watch(currentTab, () => {
 
 onMounted(() => {
   fetchBooks()
+  fetchCart()
 })
 </script>
 
