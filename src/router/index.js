@@ -9,6 +9,7 @@ import EventsView from '@/views/EventsView.vue'
 import LoginView from '@/views/LoginView.vue'
 import RegistrationView from '@/views/RegistrationView.vue'
 import ErrorView from '@/views/ErrorView.vue'
+import CoffeeView from '@/views/CoffeeView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,6 +31,11 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
+    },
+    {
+      path: '/coffee',
+      name: 'coffee',
+      component: CoffeeView,
     },
     {
       path: '/favourites',

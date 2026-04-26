@@ -4,6 +4,7 @@ import Auth from './endpoints/auth.js'
 import Reviews from './endpoints/reviews.js'
 import Favourites from './endpoints/favourites.js'
 import Cart from './endpoints/cart.js'
+import Coffee from './endpoints/coffee.js'
 
 export default {
   Auth,
@@ -11,5 +12,6 @@ export default {
   Events,
   Reviews,
   Favourites,
-  Cart
+  Cart,
+  Coffee
 }

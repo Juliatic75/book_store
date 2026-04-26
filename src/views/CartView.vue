@@ -7,7 +7,7 @@
         <Loader v-if="isLoading" />
         <div v-if="!isLoading" class="grid md:grid-cols-12 md:gap-5 items-start">
           <div class="flex flex-col gap-2 md:col-span-7">
-            <span v-if="!books.length">Ничего нет</span>
+            <span v-if="!books.length">Корзина пуста</span>
             <CartBookCard
               v-for="(book, i) in books"
               :key="i"
@@ -34,7 +34,7 @@
       <template #events>
         <div class="grid md:grid-cols-12 md:gap-5 items-start">
           <div class="flex flex-col gap-2 md:col-span-7">
-            <span v-if="!isLoading && !events.length">Ничего нет</span>
+            <span v-if="!isLoading && !events.length">Корзина пуста</span>
             <EventCard
               v-for="(event, i) in events"
               :key="i"

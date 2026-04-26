@@ -55,7 +55,7 @@ const isMenuOpen = ref(false)
 const menuItems = [
   { key: 'Книги', value: '/catalog' },
   { key: 'Мероприятия', value: '/events' },
-  { key: 'Кофейня', value: '' },
+  { key: 'Кофейня', value: '/coffee' },
   { key: 'Избранное', value: '/favourites' },
   { key: 'О нас', value: '/about' }
 ]

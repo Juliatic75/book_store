@@ -1,8 +1,8 @@
 <template>
-  <div class="coffee-card-component flex flex-col">
-    <div class="header mb-4 relative">
+  <div class="coffee-card-component flex flex-col pl-6 pr-6 pt-8 pb-8">
+    <div class="header mb-4">
       <div class="flex justify-center">
-        <img :src="props.imgUrl" alt="coffee-preview" />
+        <img :src="props.imgUrl" alt="coffee-preview" class="aspect-1" />
       </div>
     </div>
 
@@ -21,9 +21,9 @@
       <span>{{ props.price }}₽</span>
     </div>
 
-    <div class="line mb-6 justify-between "></div>
+    <div class="line mb-4 justify-between"></div>
 
-    <div class="compound mb-6 text-left ">
+    <div class="compound text-left ">
       <span>
         {{ props.compound }}
       </span>
