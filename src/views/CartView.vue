@@ -34,15 +34,13 @@
       <template #events>
         <div class="grid md:grid-cols-12 md:gap-5 items-start">
           <div class="flex flex-col gap-2 md:col-span-7">
-            <span v-if="!isLoading && !events.length">Корзина пуста</span>
+            <span v-if="!isLoading && !getCartEvents.length">Корзина пуста</span>
             <EventCard
-              v-for="(event, i) in events"
+              v-for="(event, i) in getCartEvents"
               :key="i"
               :title="event.title"
-              :date="event.date"
-              :time="event.time"
-              :weekday="event.weekday"
-              :address="event.address"
+              :date="event.dates[0]"
+              :location="event.location"
               :price="event.price"
             />
           </div>
@@ -73,17 +71,6 @@ const tabs = [
   { label: 'МЕРОПРИЯТИЯ', value: 'events' }
 ]
 
-// const events = [
-//   {
-//     title: 'Премьера детектива «Уравнение для призрака»',
-//     date: '12 Июля',
-//     time: '19:30',
-//     weekday: 'Воскресенье',
-//     address: 'Магазин «Чернила», ул. Литературная, д. 15',
-//     price: '1200'
-//   }
-// ]
-
 const cartBooks = ref([])
 const cartEvents = ref([])
 const books = ref([])
@@ -92,6 +79,19 @@ const isLoading = ref(false)
 
 const getBooksSumm = computed(() => {
   return books.value.reduce((acc, item) => acc + Number(item.price * item.quantity), 0)
+})
+
+const getCartEvents = computed(() => {
+  const results = []
+
+  cartEvents.value.forEach(event => {
+    const index = events.value.findIndex(item => item.id === event.item_id)
+    if (index !== -1) {
+      results.push(events.value[index])
+    }
+  })
+
+  return results
 })
 
 const onUpdateBookQuantity = (cartId, id, quantity) => {
@@ -179,7 +179,7 @@ const fetchEvents = async () => {
   isLoading.value = true
   try {
     const { results } = await api.Events.getEvents({
-      id: cartEvents.value.map(item => item.id),
+      id: cartEvents.value.map(item => item.item_id),
       limit: 99999
     })
 

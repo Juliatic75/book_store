@@ -1,9 +1,10 @@
 <template>
 <div class="event-card-component p-4">
   <span class="title block mb-4 font-medium">{{ props.title }}</span>
-  <span class="date block mb-6"><span class="font-medium">{{ props.date }} | {{ props.time }}</span> <span class="color-text-secondary">{{ props.weekday }}</span></span>
+  <span class="date block mb-6"><span class="font-medium capitalize">{{ getDate() }} | {{ getTime() }}</span> <span class="color-text-secondary capitalize">{{ getWeekday() }}</span></span>
   <div class="flex gap-4 mb-3"></div>
-  <span class="address block mb-6">{{ props.address }}</span>
+
+  <span class="address block mb-6">{{ props.location }}</span>
 
   <span class="tickets block mb-4 font-medium">Билеты</span>
 
@@ -19,8 +20,8 @@
   </div>
 
   <div class="price flex justify-between font-medium">
-    <span>Итого:</span>
-    <span>{{ props.price }} ₽</span>
+    <span>Цена:</span>
+    <span>{{ Number(props.price) }} ₽</span>
   </div>
 </div>
 </template>
@@ -34,8 +35,8 @@ const props = defineProps({
     default: ''
   },
   date: {
-    type: String,
-    default: ''
+    type: Object,
+    default: () => ({})
   },
   time: {
     type: String,
@@ -45,7 +46,7 @@ const props = defineProps({
     type: String,
     default: ''
   },
-  address: {
+  location: {
     type: String,
     default: ''
   },
@@ -64,6 +65,32 @@ const decrease = () => {
   if (count.value === 0) return
 
   count.value--
+}
+
+const getDate = () => {
+  if (!props.date?.event_date) return ''
+  const newDate = new Date(props.date.event_date)
+  return newDate.toLocaleDateString('ru', {
+    day: 'numeric',
+    month: 'long'
+  })
+}
+
+const getTime = () => {
+  if (!props.date?.event_date) return ''
+  const newDate = new Date(props.date.event_date)
+  return newDate.toLocaleTimeString('ru', {
+    hour: '2-digit',
+    minute: '2-digit'
+  })
+}
+
+const getWeekday = () => {
+  if (!props.date?.event_date) return ''
+  const newDate = new Date(props.date.event_date)
+  return newDate.toLocaleDateString('ru', {
+    weekday: 'long'
+  })
 }
 </script>
 

@@ -15,15 +15,26 @@
 
   <span class="mb-6">{{ props.address }}</span>
 
-  <Button>РАСПИСАНИЕ И БИЛЕТЫ</Button>
+  <Button @click="isModalOpen = true">РАСПИСАНИЕ И БИЛЕТЫ</Button>
+
+  <ModalEventDates
+    v-model="isModalOpen"
+    :price="props.price"
+    :dates="props.dates"
+  />
 </div>
 </template>
 
 <script lang="ts" setup>
-import { defineProps } from 'vue'
+import { defineProps, ref } from 'vue'
 import Button from '@/components/common/Button.vue'
+import ModalEventDates from '@/components/page-events/ModalEventDates.vue'
 
 const props = defineProps({
+  id: {
+    type: Number,
+    default: 0
+  },
   name: {
     type: String,
     default: ''
@@ -36,7 +47,17 @@ const props = defineProps({
     type: String,
     default: ''
   },
+  dates: {
+    type: Array,
+    default: () => []
+  },
+  price: {
+    type: String,
+    default: ''
+  }
 })
+
+const isModalOpen = ref(false)
 </script>
 
 <style lang="scss" scoped>

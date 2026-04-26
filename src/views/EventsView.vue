@@ -11,6 +11,8 @@
         :name="event.title"
         :description="event.description"
         :address="event.location"
+        :price="event.price"
+        :dates="event.dates"
       />
     </div>
   </div>
