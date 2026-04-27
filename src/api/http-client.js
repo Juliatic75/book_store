@@ -1,7 +1,24 @@
 import axios from 'axios'
 import qs from 'qs'
 
-const whoami = JSON.parse(localStorage.getItem('whoami') || '{}')
+let whoami = JSON.parse(localStorage.getItem('whoami') || '{}')
+
+const originalSetItem = localStorage.setItem
+
+localStorage.setItem = function (key, value) {
+  originalSetItem.apply(this, [key, value])
+
+  const event = new Event('itemInserted')
+  event.key = key
+  event.newValue = value
+  window.dispatchEvent(event)
+}
+
+window.addEventListener('itemInserted', (e) => {
+  if (e.key === 'whoami' && localStorage.getItem('whoami')) {
+    whoami = JSON.parse(localStorage.getItem('whoami') || '{}')
+  }
+})
 
 class HttpClient {
   constructor (baseURL = '/api', defaultHeaders = {}) {

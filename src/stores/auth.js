@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref(null)
+  const sessionId = ref(null)
 
   const init = () => {
     const whoami = localStorage.getItem('whoami')
@@ -16,6 +17,15 @@ export const useAuthStore = defineStore('auth', () => {
     } else {
       user.value = null
     }
+
+    let storageSessionId = localStorage.getItem('session_id')
+
+    if (!storageSessionId) {
+      storageSessionId = crypto.randomUUID()
+      localStorage.setItem('session_id', storageSessionId)
+    }
+
+    sessionId.value = storageSessionId
   }
 
   const isLogged = computed(() => !!user.value)
@@ -33,5 +43,5 @@ export const useAuthStore = defineStore('auth', () => {
 
   init()
 
-  return { user, isLogged, login, logout }
+  return { user, isLogged, sessionId, login, logout, init }
 })

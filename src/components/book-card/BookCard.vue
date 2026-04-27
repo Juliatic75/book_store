@@ -19,7 +19,7 @@
 
     <div class="title mb-4 text-left">
       <router-link :to="`/catalog/${props.id}`" class="book-title">{{ props.title }}</router-link>
-      <span class="subtitle">{{ getGenre }} {{ getGenre || props.author ? '|' : '' }} {{ props.author }}</span>
+      <span class="subtitle">{{ getGenreLabel(props.genre) }} {{ getGenreLabel(props.genre) || props.author ? '|' : '' }} {{ props.author }}</span>
     </div>
 
     <div class="description mb-6 text-left flex-1">
@@ -34,15 +34,15 @@
     </div>
 
     <Button
-      v-if="!props.enableFavourite && !props.isInCart"
+      v-if="!props.enableFavourite && !localCount"
       @click="fetchAddToCart"
       :loading="isCartLoading"
     >
       ДОБАВИТЬ В КОРЗИНУ
     </Button>
 
-    <div v-if="!props.enableFavourite && props.isInCart" class="count flex items-center justify-between">
-      <Button size="inline">-</Button>
+    <div v-if="!props.enableFavourite && localCount" class="count flex items-center justify-between">
+      <Button @click="decrease" size="inline">-</Button>
       <span>{{ localCount }}</span>
       <Button @click="increase" size="inline">+</Button>
     </div>
@@ -52,9 +52,12 @@
 <script  setup>
 import { defineProps, ref, computed, onMounted, defineEmits, watch } from 'vue'
 import { useAuthStore } from '@/stores/auth.js'
+import { useGenre } from '@/composables/useGenre.js'
 import api from '@/api'
 import Button from '@/components/common/Button.vue'
 import IconBookmark from '@/components/icons/icon-bookmark.vue'
+
+const { getGenreLabel } = useGenre()
 
 const props = defineProps({
   id: {
@@ -97,9 +100,9 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
-  isInCart: {
-    type: Boolean,
-    default: false
+  cart: {
+    type: Object,
+    default: () => ({})
   },
   quantity: {
     type: Number,
@@ -113,15 +116,11 @@ const isLocalFavorite = ref(false)
 const isFavoritesLoading = ref(false)
 const isCartLoading = ref(false)
 const countTimeout = ref(null)
-const localCount = ref(1)
+const localCount = ref(0)
 
-const genres = [
-  { key: 'Роман', value: 'novel' },
-  { key: 'Детектив', value: 'detective' },
-]
-
-const getGenre = computed(() => {
-  return genres.find(genre => genre.value === props.genre)?.key ?? ''
+const getCartItem = computed(() => {
+  const cartItems = props.cart.items
+  return cartItems.find(item => item.item_id === props.id)
 })
 
 const increase = () => {
@@ -129,7 +128,17 @@ const increase = () => {
   localCount.value++
 
   countTimeout.value = setTimeout(() => {
-    fetchAddToCart()
+    fetchUpdateCart()
+  }, 500)
+}
+
+const decrease = () => {
+  clearTimeout(countTimeout.value)
+
+  if (localCount.value >= 1) localCount.value--
+
+  countTimeout.value = setTimeout(() => {
+    localCount.value >=1 ? fetchUpdateCart() : fetchDeleteCartItem()
   }, 500)
 }
 
@@ -187,6 +196,36 @@ const fetchAddToCart = async () => {
       quantity: 1
     })
     emit('on-cart-add')
+  } catch (err) {
+    console.warn('Error', err)
+  } finally {
+    isCartLoading.value = false
+  }
+}
+
+const fetchDeleteCartItem = async () => {
+  isCartLoading.value = true
+
+  try {
+    await api.Cart.deleteCartItem({
+      item_id: getCartItem.value.id,
+      quantity: localCount.value
+    })
+  } catch (err) {
+    console.warn('Error', err)
+  } finally {
+    isCartLoading.value = false
+  }
+}
+
+const fetchUpdateCart = async () => {
+  isCartLoading.value = true
+
+  try {
+    await api.Cart.patchUpdateCart({
+      item_id: getCartItem.value.id,
+      quantity: localCount.value
+    })
   } catch (err) {
     console.warn('Error', err)
   } finally {

@@ -15,15 +15,15 @@
                 <h1 class="block book-title uppercase font-title mb-2 font-medium">
                   {{ bookInfo.title }}
                 </h1>
-                <span class="block color-text-secondary mb-2">{{ bookInfo.genre }} | {{ bookInfo.author }}</span>
+                <span class="block color-text-secondary mb-2">{{ getGenreLabel(bookInfo.genre) }} | {{ bookInfo.author }}</span>
 
                 <div class="rating flex items-center gap-1">
-                  <span>4.6</span>
+                  <span>{{ getReviewsTotalRating }}</span>
                   <IconStar/>
-                  <span>&nbsp;(6 оценок)</span>
+                  <span v-if="getReviewsCount">&nbsp;({{getReviewsCount}} оценок)</span>
                 </div>
               </div>
-              <Button class="inline" variant="text">
+              <Button v-if="isLogged" class="inline" variant="text">
                 <IconBookmark/>
               </Button>
             </div>
@@ -65,7 +65,13 @@
                   </div>
                 </div>
 
-                <Button @click="fetchAddToCart" :loading="isCartLoading">ДОБАВИТЬ В КОРЗИНУ</Button>
+                <Button v-if="!getCartItem" @click="fetchAddToCart" :loading="isCartLoading">ДОБАВИТЬ В КОРЗИНУ</Button>
+
+                <div v-if="!!getCartItem" class="flex items-center justify-between">
+                  <Button @click="decrease" size="inline">–</Button>
+                  <span class="font-bold">{{ localCount }}</span>
+                  <Button @click="increase" size="inline">+</Button>
+                </div>
               </div>
             </div>
           </div>
@@ -171,8 +177,9 @@
 
 <script setup>
 import { computed, onMounted, ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth.js'
+import { useGenre } from '@/composables/useGenre.js'
 import api from '@/api'
 import IconStar from '@/components/icons/icon-star.vue'
 import Button from '@/components/common/Button.vue'
@@ -185,11 +192,15 @@ import Link from '@/components/common/Link.vue'
 import Tabs from '@/components/tabs/Tabs.vue'
 import Loader from '@/components/common/Loader.vue'
 
-const { user } = useAuthStore()
+const { getGenreLabel } = useGenre()
+
+const { user, isLogged } = useAuthStore()
 const route = useRoute()
+const router = useRouter()
 
 const isLoading = ref(false)
 const isSimilarLoading = ref(false)
+const localCount = ref(1)
 const bookInfo = ref({
   title: '',
   age_rating: '',
@@ -209,7 +220,9 @@ const bookInfo = ref({
 })
 
 const isCartLoading = ref(false)
+const countTimeout = ref(null)
 const similarBooks = ref([])
+const cart = ref({})
 
 const tabs = [
   {label: 'ОПИСАНИЕ', value: 'desc'},
@@ -228,16 +241,67 @@ const characteristics = [
 ]
 
 const showReviewSection = computed(() => {
+  if (!bookInfo.value.reviews.length || !user?.user_id) return false
   const reviewsIds = bookInfo.value.reviews.map(item => item.user_id)
 
   return !reviewsIds.includes(user.user_id)
 })
+
+const getCartItem = computed(() => {
+  if (!cart.value.items) return null
+  return cart.value.items.find(item => item.item_id === bookInfo.value.id)
+})
+
+const getReviewsCount = computed(() => {
+  return bookInfo.value.reviews.length
+})
+
+const getReviewsTotalRating = computed(() => {
+  if (!bookInfo.value.reviews.length) return 'Нет оценок'
+  const amount = bookInfo.value.reviews.reduce((acc, item) => {
+    return acc + item.rating
+  }, 0)
+
+  return amount / bookInfo.value.reviews.length
+})
+
+const decrease = () => {
+  clearTimeout(countTimeout.value)
+  if (localCount.value > 1) localCount.value--
+  countTimeout.value = setTimeout(() => {
+    fetchUpdateCart()
+  }, 500)
+}
+const increase = () => {
+  clearTimeout(countTimeout.value)
+  localCount.value++
+  countTimeout.value = setTimeout(() => {
+    fetchUpdateCart()
+  }, 500)
+}
+
+const fetchUpdateCart = async () => {
+  isCartLoading.value = true
+
+  try {
+    await api.Cart.patchUpdateCart({
+      item_id: getCartItem.value.id,
+      quantity: localCount.value
+    })
+  } catch (err) {
+    console.warn('Error', err)
+  }
+}
 
 const fetchBook = async () => {
   try {
     bookInfo.value = await api.Products.getProduct(route.params.id)
   } catch (err) {
     console.warn('Error', err)
+
+    if (err.status && err.status === 404) {
+      await router.push({ name: 'error' })
+    }
   }
 }
 
@@ -250,10 +314,20 @@ const fetchAddToCart = async () => {
       item_id: bookInfo.value.id,
       quantity: 1
     })
+    await fetchCart()
   } catch (err) {
     console.warn('Error', err)
   } finally {
     isCartLoading.value = false
+  }
+}
+
+const fetchCart = async () => {
+  try {
+    cart.value = await api.Cart.getCart()
+  } catch (err) {
+    console.warn('Error', err)
+    isLoading.value = false
   }
 }
 
@@ -275,6 +349,7 @@ const fetchBooks = async (genre = ['novel', 'detective']) => {
 
 onMounted(async () => {
   isLoading.value = true
+  await fetchCart()
   await fetchBook()
   isLoading.value = false
 

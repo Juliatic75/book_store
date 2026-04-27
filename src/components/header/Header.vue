@@ -12,7 +12,7 @@
     </ul>
 
     <div class="side-menu flex items-center max-lg:hidden">
-      <router-link v-if="isLogged" class="flex" to="/cart">
+      <router-link class="flex" to="/cart">
         <IconCart />
       </router-link>
 

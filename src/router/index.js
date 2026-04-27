@@ -1,15 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
-import BookView from '@/views/BookView.vue'
-import FavouritesView from '@/views/FavouritesView.vue'
-import BookCatalogView from '@/views/BookCatalogView.vue'
-import CartView from '@/views/CartView.vue'
-import ProfileView from '@/views/ProfileView.vue'
-import EventsView from '@/views/EventsView.vue'
 import LoginView from '@/views/LoginView.vue'
 import RegistrationView from '@/views/RegistrationView.vue'
 import ErrorView from '@/views/ErrorView.vue'
-import CoffeeView from '@/views/CoffeeView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -35,37 +28,37 @@ const router = createRouter({
     {
       path: '/coffee',
       name: 'coffee',
-      component: CoffeeView,
+      component: () => import('../views/CoffeeView.vue'),
     },
     {
       path: '/favourites',
       name: 'favourites',
-      component: FavouritesView,
+      component: () => import('../views/FavouritesView.vue'),
     },
     {
       path: '/catalog',
       name: 'catalog',
-      component: BookCatalogView,
+      component: () => import('../views/BookCatalogView.vue'),
     },
     {
       path: '/cart',
       name: 'cart',
-      component: CartView,
+      component: () => import('../views/CartView.vue'),
     },
     {
       path: '/catalog/:id',
       name: 'book-page',
-      component: BookView,
+      component: () => import('../views/BookView.vue'),
     },
     {
       path: '/profile',
       name: 'profile',
-      component: ProfileView,
+      component: () => import('../views/ProfileView.vue'),
     },
     {
       path: '/events',
       name: 'events',
-      component: EventsView,
+      component: () => import('../views/EventsView.vue'),
     },
     {
       path: '/about',

@@ -24,7 +24,7 @@
           :img-url="book.image_url"
           :description="book.description"
           :quantity="book.quantity"
-          :is-in-cart="isBookInCart(book.id)"
+          :cart="cart"
           @on-cart-add="fetchCart"
         />
       </div>
@@ -48,7 +48,7 @@
             :img-url="book.image_url"
             :description="book.description"
             :quantity="book.quantity"
-            :is-in-cart="isBookInCart(book.id)"
+            :cart="cart"
             @on-cart-add="fetchCart"
           />
         </div>
@@ -63,7 +63,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch, computed } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import api from '@/api'
 import BookCard from '@/components/book-card/BookCard.vue'
 // import Link from '@/components/common/Link.vue'
@@ -73,7 +73,7 @@ import Tabs from '@/components/tabs/Tabs.vue'
 const isLoading = ref(false)
 const books = ref([])
 const currentTab = ref('novel')
-const cartItems = ref([])
+const cart = ref({})
 
 const genres = [
   { label: 'Романтика', value: 'novel' },
@@ -93,10 +93,10 @@ const genresBooksMap = computed(() => {
     const books = getBooks(genre.value)
 
     books.forEach(book => {
-      const index = cartItems.value.findIndex(item => item.item_id === book.id)
+      const index = cart.value.items.findIndex(item => item.item_id === book.id)
 
       if (index !== -1) {
-        book.quantity = cartItems.value[index].quantity
+        book.quantity = cart.value.items[index].quantity
       }
     })
 
@@ -109,10 +109,6 @@ const genresBooksMap = computed(() => {
 
   return result
 })
-
-const isBookInCart = (id) => {
-  return cartItems.value.findIndex(item => item.item_id === id) !== -1
-}
 
 const getBooks = (genre) => {
   return books.value.filter(book => book.genre === genre)
@@ -136,9 +132,7 @@ const fetchBooks = async (genre = ['novel', 'detective']) => {
 
 const fetchCart = async () => {
   try {
-    const { items } = await api.Cart.getCart()
-
-    cartItems.value = items
+    cart.value = await api.Cart.getCart()
   } catch (err) {
     console.warn('Error', err)
   }
