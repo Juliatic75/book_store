@@ -88,15 +88,13 @@ const tabs = [
 ]
 
 const genresBooksMap = computed(() => {
-  if (!cart.value?.items?.length) return {}
-
   const result = {}
 
   genres.forEach(genre => {
     const books = getBooks(genre.value)
 
     books.forEach(book => {
-      const index = cart.value.items.findIndex(item => item.item_id === book.id)
+      const index = cart.value?.items?.findIndex(item => item.item_id === book.id) ?? -1
 
       if (index !== -1) {
         book.quantity = cart.value.items[index].quantity
