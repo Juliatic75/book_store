@@ -60,22 +60,27 @@ const submit = async () => {
 
     login(res)
 
-    const sessionId = localStorage.getItem('session_id')
-
-    await api.Cart.postMergeCart({
-      session_id: sessionId
-    })
-
-    localStorage.removeItem('session_id')
-
-    window.location.replace('/')
+    await mergeCart()
   } catch (err) {
     console.warn('Error', err)
     if (err.status && err.status === 401) {
       showLoginError.value = true
     }
-  } finally {
     isLoading.value = false
+  }
+}
+
+const mergeCart = async () => {
+  try {
+    const sessionId = localStorage.getItem('session_id')
+
+    await api.Cart.postMergeCart({
+      session_id: sessionId
+    })
+  } finally {
+    localStorage.removeItem('session_id')
+
+    window.location.replace('/')
   }
 }
 </script>
