@@ -88,7 +88,10 @@ const tabs = [
 ]
 
 const genresBooksMap = computed(() => {
+  if (!cart.value?.items?.length) return {}
+
   const result = {}
+
   genres.forEach(genre => {
     const books = getBooks(genre.value)
 
