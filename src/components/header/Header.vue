@@ -96,7 +96,7 @@ onBeforeUnmount(() => {
     border-left: 1px solid;
     border-right: 1px solid;
     border-bottom: 1px solid;
-    box-shadow: 0px 10px 10px 10px rgba(#333333, 0.2);
+    box-shadow: 0 10px 10px 10px rgba(#333333, 0.2);
   }
 
   .menu {
@@ -104,6 +104,13 @@ onBeforeUnmount(() => {
 
     li + li {
       margin-left: 32px;
+    }
+  }
+
+  a {
+    &:hover {
+      color: var(--link-hover-color);
+      text-decoration: none;
     }
   }
 

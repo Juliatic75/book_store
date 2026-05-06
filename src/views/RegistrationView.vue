@@ -30,12 +30,14 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import {onMounted, ref} from 'vue'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 import api from '@/api'
 import Input from '@/components/common/Input.vue'
 import Button from '@/components/common/Button.vue'
 
+const { isLogged } = useAuthStore()
 const router = useRouter()
 
 const isLoading = ref(false)
@@ -62,6 +64,12 @@ const submit = async () => {
     isLoading.value = false
   }
 }
+
+onMounted(() => {
+  if (isLogged) {
+    router.push('/')
+  }
+})
 </script>
 
 <style lang="scss" scoped>

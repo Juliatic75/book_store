@@ -30,13 +30,16 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import {onMounted, ref} from 'vue'
+import { useRouter } from 'vue-router'
 import api from '@/api'
 import Input from '@/components/common/Input.vue'
 import Button from '@/components/common/Button.vue'
 import { useAuthStore } from '@/stores/auth.js'
 
-const { login } = useAuthStore()
+const { login, isLogged } = useAuthStore()
+
+const router = useRouter()
 
 const isLoading = ref(false)
 const showLoginError = ref(false)
@@ -83,6 +86,12 @@ const mergeCart = async () => {
     window.location.replace('/')
   }
 }
+
+onMounted(() => {
+  if (isLogged) {
+    router.push('/')
+  }
+})
 </script>
 
 <style lang="scss" scoped>

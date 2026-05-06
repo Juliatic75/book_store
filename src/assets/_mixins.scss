@@ -1,0 +1,33 @@
+@use "sass:map";
+@use "sass:list";
+
+$breakpoints: (
+  (max: 833px),
+  (min: 834px, max: 1193px),
+  (min: 1194px, max: 1439px),
+  (min: 1440px, max: 1919px),
+  (min: 1920px)
+);
+
+@mixin responsive-prop($prop, $values...) {
+  @for $i from 1 through list.length($breakpoints) {
+    $bp: list.nth($breakpoints, $i);
+    $conditions: ();
+    $query: '';
+
+    @if map.has-key($bp, min) and map.has-key($bp, max) {
+      // ВАЖНО: используем "and" между условиями
+      $query: '(min-width: #{map.get($bp, min)}) and (max-width: #{map.get($bp, max)})';
+    }
+    @else if map.has-key($bp, min) {
+      $query: '(min-width: #{map.get($bp, min)})';
+    }
+    @else if map.has-key($bp, max) {
+      $query: '(max-width: #{map.get($bp, max)})';
+    }
+
+    @media #{$query} {
+      #{$prop}: list.nth($values, $i);
+    }
+  }
+}

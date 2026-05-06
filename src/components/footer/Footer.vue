@@ -5,10 +5,18 @@
 
     <div>
       <ul class="grid grid-cols-2 gap-4 mb-10">
-        <li>Личный кабинет</li>
-        <li>Каталог</li>
-        <li>Мероприятия</li>
-        <li>Корзина</li>
+        <li>
+          <router-link to="/profile">Личный кабинет</router-link>
+        </li>
+        <li>
+          <router-link to="/catalog">Каталог</router-link>
+        </li>
+        <li>
+          <router-link to="/events">Мероприятия</router-link>
+        </li>
+        <li>
+          <router-link v-if="isLogged" to="/cart">Корзина</router-link>
+        </li>
         <li>Для авторов</li>
       </ul>
 
@@ -36,61 +44,41 @@
     <hr class="md:mb-6 mb-1" />
 
     <div class="md:flex md:justify-between">
-      <span class="policy color-secondary md:order-2">Политика обработки персональных данных</span>
+      <a
+        class="policy color-secondary md:order-2"
+        href="/policy"
+        target="_blank"
+      >
+        Политика обработки персональных данных
+      </a>
 
       <div class="max-md:mt-2 md:order-1">
-        <span class="policy color-secondary">@2025</span>Chernila
+        <span class="policy color-secondary">@2025</span>Чернила
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-// import { useViewport } from '@/composables/useViewport'
+import { useAuthStore } from '@/stores/auth'
 import IconLogo from '@/components/icons/icon-logo.vue'
 import IconMapPoint from '@/components/icons/icon-map-point.vue'
 import IconLogoLg from '@/components/icons/icon-logo-lg.vue'
+
+const { isLogged } = useAuthStore()
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/_mixins.scss";
+
 .footer-component {
   margin: 0 16px;
   border-top: 1px solid var(--text-color);
 
-  @media (max-width: 833px) {
-    font-size: 16px;
+  @include mixins.responsive-prop(font-size, 16px, 18px, 18px, 22px, 24px);
 
-    .policy {
-      font-size: 14px;
-    }
-  }
-
-  @media (min-width: 834px) and (max-width: 1193px) {
-    font-size: 18px;
-    .policy {
-      font-size: 16px;
-    }
-  }
-
-  @media (min-width: 1194px) and (max-width: 1439px) {
-    font-size: 18px;
-    .policy {
-      font-size: 16px;
-    }
-  }
-
-  @media (min-width: 1440px) and (max-width: 1919px) {
-    font-size: 22px;
-    .policy {
-      font-size: 18px;
-    }
-  }
-
-  @media (min-width: 1920px) {
-    font-size: 24px;
-    .policy {
-      font-size: 20px;
-    }
+  .policy {
+    @include mixins.responsive-prop(font-size, 14px, 16px, 16px, 18px, 20px);
   }
 }
 </style>

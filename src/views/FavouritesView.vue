@@ -5,7 +5,6 @@
     <Loader v-if="isLoading" />
 
     <div v-if="!isLoading" class="grid md:grid-cols-2 sm:grid-cols-1 gap-4">
-      <span v-if="!bookCards.length">Нет данных</span>
       <BookCard
         v-for="(card, i) in bookCards" :key="i"
         :id="card.id"
@@ -21,11 +20,11 @@
       />
     </div>
 
-    <div v-if="false">
+    <div v-if="!bookCards.length" class="pt-20">
       <span class="block font-bold text-center color-text-secondary mb-4">Полка пустует.</span>
       <span class="block font-bold text-center color-text-secondary mb-10">Но каждая великая библиотека когда-то начиналась с одной книги.</span>
       <div class="flex justify-center">
-        <Button size="inline">ДОБАВИТЬ В КОРЗИНУ</Button>
+        <Button to="/catalog" size="inline">ПЕРЕЙТИ В КАТАЛОГ</Button>
       </div>
     </div>
   </div>

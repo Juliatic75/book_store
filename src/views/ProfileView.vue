@@ -50,7 +50,7 @@
     <template #orders>
       <div class="mt-8">
         <div class="grid gap-5 md:grid-cols-3 sm:grid-cols-1">
-          <span>Нет заказов</span>
+          <span class="col-span-3 block font-bold text-center color-text-secondary mb-4">Нет заказов</span>
         </div>
       </div>
     </template>
@@ -60,7 +60,7 @@
         <Loader v-if="isReviewsLoading" />
 
         <div v-if="!isReviewsLoading" class="grid gap-5 md:grid-cols-3 sm:grid-cols-1">
-          <span v-if="!reviews.length">Нет отзывов</span>
+          <span v-if="!reviews.length" class="col-span-3 block font-bold text-center color-text-secondary mb-4">Вы ещё не оставили ни одного отзыва</span>
           <ReviewCard
             v-for="(review, i) in reviews"
             :key="i"

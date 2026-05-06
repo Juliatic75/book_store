@@ -32,6 +32,8 @@ const getComponentTag = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/_mixins.scss";
+
 .link-component {
   color: var(--primary-color);
 
@@ -40,24 +42,6 @@ const getComponentTag = computed(() => {
     line-height: 1;
   }
 
-  @media (max-width: 833px) {
-    font-size: 16px;
-  }
-
-  @media (min-width: 834px) and (max-width: 1193px) {
-    font-size: 16px;
-  }
-
-  @media (min-width: 1194px) and (max-width: 1439px) {
-    font-size: 18px;
-  }
-
-  @media (min-width: 1440px) and (max-width: 1919px) {
-    font-size: 22px;
-  }
-
-  @media (min-width: 1920px) {
-    font-size: 30px;
-  }
+  @include mixins.responsive-prop(font-size, 16px, 16px, 18px, 22px, 30px);
 }
 </style>

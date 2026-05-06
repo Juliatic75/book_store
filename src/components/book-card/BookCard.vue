@@ -247,6 +247,8 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/_mixins.scss";
+
 .book-card-component {
   padding: 16px;
   background-color: var(--lighten-color);
@@ -263,7 +265,7 @@ onMounted(() => {
     color: var(--text-lighten-color);
 
     &.is-active {
-      color: var(--delete-color);
+      color: var(--primary-color);
     }
   }
 
@@ -284,8 +286,6 @@ onMounted(() => {
   }
 
   .description {
-    line-height: 1;
-
     span {
       font-weight: 300;
     }
@@ -295,64 +295,19 @@ onMounted(() => {
     font-weight: 500;
   }
 
-  @media (max-width: 833px) {
-    .book-title {
-      font-size: 16px;
-    }
-    .book-subtitle {
-      font-size: 16px;
-    }
-    .description {
-      font-size: 18px;
-    }
+  .book-title {
+    @include mixins.responsive-prop(font-size, 16px, 18px, 18px, 24px, 30px);
+    @include mixins.responsive-prop(line-height, 18px, 20px, 20px, 26px, 32px);
   }
 
-  @media (min-width: 834px) and (max-width: 1193px) {
-    .book-title {
-      font-size: 18px;
-    }
-    .book-subtitle {
-      font-size: 16px;
-    }
-    .description {
-      font-size: 18px;
-    }
+  .book-subtitle {
+    @include mixins.responsive-prop(font-size, 16px, 16px, 16px, 20px, 24px);
+    @include mixins.responsive-prop(line-height, 18px, 18px, 18px, 22px, 26px);
   }
 
-  @media (min-width: 1194px) and (max-width: 1439px) {
-    .book-title {
-      font-size: 18px;
-    }
-    .book-subtitle {
-      font-size: 16px;
-    }
-    .description {
-      font-size: 18px;
-    }
-  }
-
-  @media (min-width: 1440px) and (max-width: 1919px) {
-    .book-title {
-      font-size: 24px;
-    }
-    .book-subtitle {
-      font-size: 20px;
-    }
-    .description {
-      font-size: 22px;
-    }
-  }
-
-  @media (min-width: 1920px) {
-    .book-title {
-      font-size: 30px;
-    }
-    .book-subtitle {
-      font-size: 24px;
-    }
-    .description {
-      font-size: 24px;
-    }
+  .description {
+    @include mixins.responsive-prop(font-size, 18px, 18px, 18px, 22px, 24px);
+    @include mixins.responsive-prop(line-height, 20px, 20px, 20px, 24px, 26px);
   }
 }
 </style>

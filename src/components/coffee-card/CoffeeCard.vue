@@ -71,6 +71,8 @@ console.log(props)
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/_mixins.scss";
+
 .coffee-card-component {
   padding: 16px;
   background-color: var(--lighten-color);
@@ -89,7 +91,6 @@ console.log(props)
 
   .description {
     span {
-      //font-size: 18px;
       font-weight: 300;
       line-height: 1;
     }
@@ -115,6 +116,21 @@ console.log(props)
     background-color: var(--line-color);
     width: 100%;
     height: 1px;
+  }
+
+  .title .coffee-title {
+    @include mixins.responsive-prop(font-size, 16px, 18px, 18px, 24px, 30px);
+    @include mixins.responsive-prop(line-height, 18px, 20px, 20px, 26px, 32px);
+  }
+
+  .compound span {
+    @include mixins.responsive-prop(font-size, 16px, 16px, 16px, 20px, 24px);
+    @include mixins.responsive-prop(line-height, 18px, 18px, 18px, 22px, 26px);
+  }
+
+  .description {
+    @include mixins.responsive-prop(font-size, 18px, 18px, 18px, 22px, 24px);
+    @include mixins.responsive-prop(line-height, 20px, 20px, 20px, 24px, 26px);
   }
 }
 </style>

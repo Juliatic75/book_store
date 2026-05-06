@@ -31,7 +31,7 @@
             <div class="max-md:hidden">
               <Tabs :tabs="tabs">
                 <template #desc>
-                  <p>{{ bookInfo.description }}</p>
+                  <p class="description">{{ bookInfo.description }}</p>
                 </template>
                 <template #chars>
                   <table>
@@ -86,7 +86,7 @@
         <div class="description my-8">
           <span class="block mb-6 font-subtitle">ОПИСАНИЕ</span>
 
-          <p>{{ bookInfo.description }}</p>
+          <p class="description">{{ bookInfo.description }}</p>
         </div>
 
         <div class="characteristics mb-6">
@@ -358,6 +358,8 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/_mixins.scss";
+
 .book-view {
   .book-info {
     .book-title {
@@ -366,6 +368,8 @@ onMounted(async () => {
   }
 
   .description {
+    @include mixins.responsive-prop(font-size, 16px, 18px, 18px, 22px, 28px);
+
     p + p {
       margin-top: 12px;
     }
