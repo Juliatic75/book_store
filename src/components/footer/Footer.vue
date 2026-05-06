@@ -1,7 +1,9 @@
 <template>
   <div class="footer-component pt-6 pb-5">
-    <IconLogo class="mb-6 md:hidden" />
-    <IconLogoLg class="mb-6 max-md:hidden" />
+    <router-link to="/">
+      <IconLogo class="mb-6 md:hidden" />
+      <IconLogoLg class="mb-6 max-md:hidden" />
+    </router-link>
 
     <div>
       <ul class="grid grid-cols-2 gap-4 mb-10">
@@ -79,6 +81,10 @@ const { isLogged } = useAuthStore()
 
   .policy {
     @include mixins.responsive-prop(font-size, 14px, 16px, 16px, 18px, 20px);
+  }
+
+  a:hover {
+    color: var(--link-hover-color);
   }
 }
 </style>

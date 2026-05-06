@@ -1,20 +1,15 @@
 <template>
-  <div class="home-page">
+  <div class="page home-page">
 
-    <section>
-      <img src="/img/hero-img.png" alt="hero-image">
-    </section>
+    <Hero />
 
-    <section class="mb-20">
-      <h2 class="font-bold mb-8">ДОБРО ПОЖАЛОВАТЬ В МЕСТО, ГДЕ ПАХНЕТ КОФЕ И КНИГАМИ</h2>
-      <div class="grid grid-cols-2 gap-5 mb-20">
-        <span>Мы&nbsp;собрали лучшую печатную продукцию&nbsp;&mdash; от&nbsp;бестселлеров до&nbsp;независимых изданий, а&nbsp;рядом работает кофейня, где всегда готовы согреть разговором или идеальным капучино.</span>
-        <span>У&nbsp;нас можно бесконечно бродить между стеллажами, вдыхать аромат cвежеобжаренных зерен и&nbsp;находить те&nbsp;самые истории, которые останутся с&nbsp;вами надолго.</span>
-      </div>
-      <div class="text-center">
-        <span>Приходите листать, читать, пить кофе и чувствовать себя как дома.</span>
-      </div>
-    </section>
+    <Description />
+
+    <Gallery class="md:visible" />
+
+    <div class="text-center mb-10">
+      <p>Приходите листать, читать, пить кофе и чувствовать себя как дома.</p>
+    </div>
 
     <section>
       <h2 class="mb-10 font-bold">ЛУЧШИЕ КНИГИ МЕСЯЦА</h2>
@@ -62,6 +57,9 @@ import api from '@/api'
 import CoffeeCard from '@/components/coffee-card/CoffeeCard.vue'
 import BookCard from '@/components/book-card/BookCard.vue'
 import Link from '@/components/common/Link.vue'
+import Hero from '@/components/page-home/Hero.vue'
+import Description from '@/components/page-home/Description.vue'
+import Gallery from '@/components/page-home/Gallery.vue'
 
 const coffeeItems = ref([])
 const booksItems = ref([])
@@ -97,5 +95,12 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/mixins.scss";
 
+.home-page {
+  p {
+    @include mixins.responsive-prop(font-size, 16px, 18px, 18px, 22px, 24px);
+    @include mixins.responsive-prop(line-height, 18px, 20px, 20px, 24px, 26px);
+  }
+}
 </style>

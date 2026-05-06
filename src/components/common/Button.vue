@@ -81,6 +81,7 @@ const classList = computed(() => {
     user-select: none;
     padding: 14px 40px;
     cursor: pointer;
+    text-align: center;
     transition: background-color 0.2s, color 0.2s;
 
     // eslint-disable-next-line
