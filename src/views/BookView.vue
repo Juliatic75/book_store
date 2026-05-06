@@ -23,7 +23,14 @@
                   <span v-if="getReviewsCount">&nbsp;({{getReviewsCount}} оценок)</span>
                 </div>
               </div>
-              <Button v-if="isLogged" class="inline" variant="text">
+              <Button
+                v-if="isLogged"
+                @click="toggleFavourites"
+                :loading="isFavoritesLoading"
+                class="button-favourite inline"
+                :class="{ 'is-active': isLocalFavorite }"
+                variant="text"
+              >
                 <IconBookmark/>
               </Button>
             </div>
@@ -133,7 +140,7 @@
         </span>
 
         <div class="grid grid-cols-3 sm:grid-cols-1 md:grid-cols-3 gap-2">
-          <span v-if="!bookInfo.reviews.length">Нет отзывов</span>
+          <span v-if="!bookInfo.reviews.length" class="block font-bold color-text-secondary mb-4">Нет отзывов</span>
           <ReviewCard
             v-for="(item, i) in bookInfo.reviews"
             :key="i"
@@ -154,7 +161,7 @@
 
       <Loader v-if="isSimilarLoading" />
       <div v-if="!isSimilarLoading" class="grid grid-cols-3 sm:grid-cols-1 md:grid-cols-3 gap-2">
-        <span v-if="!similarBooks.length">Нет похожих книг</span>
+        <span v-if="!similarBooks.length" class="block font-bold color-text-secondary mb-4">Нет похожих книг</span>
         <BookCard
           v-for="(card, i) in similarBooks"
           :key="i"
@@ -216,9 +223,17 @@ const bookInfo = ref({
   short_description: '',
   stock: '',
   year: '',
+  isbn: '',
+  sku: '',
+  binding: '',
+  pages: '',
+  size: '',
+  cover_type: '',
   reviews: []
 })
 
+const isFavoritesLoading = ref(false)
+const isLocalFavorite = ref(false)
 const isCartLoading = ref(false)
 const countTimeout = ref(null)
 const similarBooks = ref([])
@@ -229,16 +244,18 @@ const tabs = [
   {label: 'ХАРАКТЕРИСТИКИ', value: 'chars'}
 ]
 
-const characteristics = [
-  {key: 'Артикул', value: '879606'},
-  {key: 'ISBN', value: '3920394788292'},
-  {key: 'Переплет', value: 'Твердый'},
-  {key: 'Год издания', value: '2024'},
-  {key: 'Издательство', value: 'Альпина'},
-  {key: 'Кол-во страниц', value: '432'},
-  {key: 'Размер', value: '0.5 см × 19.8 см × 25.6 см'},
-  {key: 'Тип обложки', value: 'Твердая'}
-]
+const characteristics = computed(() => {
+  return [
+    {key: 'Артикул', value: bookInfo.value.sku},
+    {key: 'ISBN', value: bookInfo.value.isbn},
+    {key: 'Переплет', value: bookInfo.value.binding},
+    {key: 'Год издания', value: bookInfo.value.year},
+    {key: 'Издательство', value: bookInfo.value.publisher},
+    {key: 'Кол-во страниц', value: bookInfo.value.pages},
+    {key: 'Размер', value: bookInfo.value.size},
+    {key: 'Тип обложки', value: bookInfo.value.cover_type}
+  ]
+})
 
 const showReviewSection = computed(() => {
   if (!bookInfo.value.reviews.length || !user?.user_id) return false
@@ -347,10 +364,64 @@ const fetchBooks = async (genre = ['novel', 'detective']) => {
   }
 }
 
+const toggleFavourites = () => {
+  isLocalFavorite.value ? fetchDeleteFavourite() : fetchAddFavourite()
+}
+
+const fetchAddFavourite = async () => {
+  if (!bookInfo.value.id) return
+
+  isFavoritesLoading.value = true
+
+  try {
+    await api.Favourites.postAddFavourite({
+      product_id: bookInfo.value.id
+    })
+
+    isLocalFavorite.value = true
+  } catch (err) {
+    console.warn('Error', err)
+  } finally {
+    isFavoritesLoading.value = false
+  }
+}
+
+const fetchDeleteFavourite = async () => {
+  if (!bookInfo.value.id) return
+  isFavoritesLoading.value = true
+
+  try {
+    await api.Favourites.deleteFavourite({
+      product_id: bookInfo.value.id
+    })
+
+    isLocalFavorite.value = false
+  } catch (err) {
+    console.warn('Error', err)
+  } finally {
+    isFavoritesLoading.value = false
+  }
+}
+
+const fetchFavourites = async () => {
+  isFavoritesLoading.value = true
+
+  try {
+    const { results } = await api.Favourites.getFavourites()
+
+    isLocalFavorite.value = results.find(item => item.id === bookInfo.value.id)
+  } catch (err) {
+    console.warn('Error', err)
+  } finally {
+    isFavoritesLoading.value = false
+  }
+}
+
 onMounted(async () => {
   isLoading.value = true
   await fetchCart()
   await fetchBook()
+  fetchFavourites()
   isLoading.value = false
 
   await fetchBooks(bookInfo.value.genre)
@@ -364,6 +435,14 @@ onMounted(async () => {
   .book-info {
     .book-title {
       font-weight: 500;
+    }
+  }
+
+  .button-favourite {
+    color: var(--text-lighten-color);
+
+    &.is-active {
+      color: var(--primary-color);
     }
   }
 
